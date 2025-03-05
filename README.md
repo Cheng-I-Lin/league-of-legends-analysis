@@ -45,6 +45,12 @@ I realized that some columns contain missing values, specifically in the columns
 ### Univariate Analysis
 For the univariate analysis, the below plot shows the distribution of team KDA ratio in the dataset:
 <!-- Insert graph -->
+<iframe
+  src="assets/kda-distribution.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
 The histogram clearly shows a extremely right skewed distribution of team KDA ratio, indicating that most teams performed relatively "normally", with a lower KDA that's to be expected. Yet, there are some teams that performed significantly better, killing and assiting a lot more within a match while dying on a lower interval, hence creating this right skewed distribution. This is also to be expected as in some rare cases there will be matches where one team is superior than the other, and this large gap in skills and experience can lead to extreme outliers in team KDA ratio.
 
 Another univariate analysis I performed is shown below with the distribution of team damage per minute (DPM):
@@ -93,12 +99,13 @@ Next, let's look at the missingness dependency between the columns `damagemitiga
 From the hypothesis testing, it's statistically significant to conclude that securing the first dragon kill can lead to a better team performance. Therefore, we can try to predict if a team would win or lose a game given whether they obtained the first dragon kill or not along with some other important team statistics.
 
 ## Baseline Model
-Now, it's time to make a predictive baseline model that can answer our prediction question. For the baseline model, I utilized a <!--model name-->, which contains the following features: `kills`, `deaths`, `assists`, `firstdragon`, `dpm`, `damagetakenperminute`, `damagemitigatedperminute`, and `totalgold`. Among all these feature, all of them are quantitative except `firstdragon`, which is a nominal categorical variable already in binary form (0 and 1) that does not require further encodings. For the rest of the quantitative features (`kills`, `deaths`, `assists`, `dpm`, `damagetakenperminute`, `damagemitigatedperminute`, and `totalgold`), I performed a 
+Now, it's time to make a predictive baseline model that can answer our prediction question. For the baseline model, I utilized a <!--model name-->, which contains the following features: `kills`, `deaths`, `assists`, and `firstdragon`. Among all these feature, all of them are quantitative except `firstdragon`, which is a nominal categorical variable already in binary form (0 and 1) that does not require further encodings. For the rest of the quantitative features (`kills`, `deaths`, and `assists`), I performed a 
 
 ## Final Model
-
+For the final model, I added four more features: `dpm`, `damagetakenperminute`, `damagemitigatedperminute`, and `totalgold`. In a typical LOL game, it is intuitively assumed that the team who dealt the most damage or avoid the most damage would have an advantage as they would be able to eliminate more enemies while staying alive for a longer period of time. Therefore, the features `dpm`, `damagetakenperminute`, and `damagemitigatedperminute` would provide the model with the extra information needed to determine which team has a winning advantage. Moreover, gold is crucial for the players to upgrade the champions offense and defense. With enhanced offensive and defensive skills, one can more easily 
 
 ## Fairness Analysis
+
 **Null Hypothesis**: 
 **Alternative Hypothesis**: 
 **Test Statistic**: 
