@@ -47,7 +47,7 @@ For the univariate analysis, the below plot shows the distribution of team KDA r
 <!-- Insert graph -->
 <iframe
   src="assets/kda-distribution.html"
-  width="800"
+  width="1000"
   height="600"
   frameborder="0"
 ></iframe>
@@ -55,15 +55,33 @@ The histogram clearly shows a extremely right skewed distribution of team KDA ra
 
 Another univariate analysis I performed is shown below with the distribution of team damage per minute (DPM):
 <!-- Insert graph -->
+<iframe
+  src="assets/dpm-distribution.html"
+  width="1000"
+  height="600"
+  frameborder="0"
+></iframe>
 The histogram shows a nearly normal distribution with a slightly right skewed tail, indicating that the data is well-behaved as all team DPMs are relatively balanced for both team. This means that no teams had a significantly more damage output than their counterpart opponenets, which is fairly typical for such gaming scenarios. Note that although there are some outliers in team KDA distribution, there aren't really any in team DPM distribution. This is because although that both teams can deal similar amounts of damage to each other, ultimately one team is better at getting the kills or getting away with low health, thus producing a large gap in the KDA department even with similar damage output.
 
 ### Bivariate Analysis
 For the bivariate analysis, the below chart shows how many teams won with the first dragon kill and how many teams lost despite obtaining the first dragon kill:
 <!-- Insert graph -->
+<iframe
+  src="assets/win-piechart.html"
+  width="1000"
+  height="600"
+  frameborder="0"
+></iframe>
 According to the pie chart, teams with the first dragon kill wins the match approximately 57.7% of the time. This significant win rate suggests that most teams that obtained the first dragon kill ultimately wins the game, implying that trying to secure a dragon kill first can be a viable strategy that could lead to an advantageous start and to overall success.
 
 Another bivaraiate analysis I performed is shown below with the distributions of team KDA ratios based on their respective first dragon kill status:
 <!-- Insert graph -->
+<iframe
+  src="assets/kda-boxplot.html"
+  width="1000"
+  height="600"
+  frameborder="0"
+></iframe>
 According to the box plots, teams with the first dragon kill has a slightly higher KDA
 
 ### Interesting Aggregates
