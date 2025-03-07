@@ -9,9 +9,11 @@ Author: Cheng-I (Alan) Lin
 ### General Information
 **League of Legends**, otherwise commonly known as **LOL**, is a popular multiplayer online battle arena video game developed and published by Riot Games in 2009. 
 
-In a regular game of LOL, 10 players are divided into two teams of 5 that compete against each other in player-versus-player combat. Each player would be able to select a **champion**, playable character with unique abilities and differing styles of play, controlling them to eliminate opposing champions and pushing through all defensive turrets (towers) to destroy the enemy main base **Nexus**, which is the main objective of the game. To help champions progress within the game in terms of strength (damage output) or other ability based upgrades, LOL also introduces the concept of 
+In a regular game of LOL, 10 players are divided into two teams of 5 that compete against each other in player-versus-player combat. Each player would be able to select a **champion**, playable character with unique abilities and differing styles of play, controlling them to eliminate opposing champions and pushing through all defensive turrets (towers) to destroy the enemy main base **Nexus**, which is the main objective of the game. To help champions progress within the game in terms of strength (damage output or defensive capabilities) or other ability based upgrades, LOL also introduces the concept of 
 
-Within the game of LOL, the concept of **dragons** are 
+**monsters**
+
+Within the game of LOL, the concept of **dragons** is a special type of monster that gives the player an unique buff depending on the type of dragon slained. For instance, killing the Inferno Dragon grants the champion 4% to 16% attack damage boost and provides 150 to 330 experience points depending on the level of the dragon, which progesses as the game goes on. 
 
 
 
@@ -27,10 +29,10 @@ Below are relevant columns that are nececcary for analytical purposes and their 
 - `deaths`: This column records the total number of deaths -- eliminations by enemy champions or other in game mechanisms such as minions or monsters -- a team has throughout the match.
 - `assists`: This column records the number of assists -- contribtuions to enemy champion eliminations, but no direct kills -- credited to a team throughout the match.
 - `firstdragon`: This column indicates the outcome of whether a team has successfully obtained the first dragon kill, with 1 representing the team with the first dragon kill and 0 representing the team without the first dragon kill.
-- `dpm`: This column quantifies the amount of total damage outputted by all five players in a team per minute through basic , reflecting the .
-- `damagetakenperminute`: This column quantifies the amount of total damage taken by all five players in a team per minute, reflecting the .
-- `damagemitigatedperminute`: This column quantifies the amount of total damage mitigated by all five players in a team per minute. By mitigating damage, it means that, reflecting
-- `totalgold`: This column quantifies the total amount of gold obtained by a team throughout the match. Gold is the in game currency used for various strategic 
+- `dpm`: This column quantifies the amount of total damage outputted by all five players in a team per minute through basic , reflecting the . <!--Need more info-->
+- `damagetakenperminute`: This column quantifies the amount of total damage taken by all five players in a team per minute, reflecting the . <!--Need more info-->
+- `damagemitigatedperminute`: This column quantifies the amount of total damage mitigated by all five players in a team per minute. By mitigating damage, it means that, reflecting <!--Need more info-->
+- `totalgold`: This column quantifies the total amount of gold obtained by a team throughout the match. Gold is the in game currency used for various strategic <!--Need more info-->
 
 ## Data Cleaning and Exploratory Data Analysis
 ### Data Cleaning
@@ -42,8 +44,10 @@ Next, to further condense the information present in the dataset, I created one 
 
 I realized that some columns contain missing values, specifically in the columns `dpm`. Therefore, 
 
+Below is the head of the cleaned dataframe:
+
 | gameid                | league   | side   |   result |   kills |   deaths |   assists |   kda | firstdragon   |     dpm |   damagetakenperminute | damagemitigatedperminute   |   totalgold |
-|:----------------------|:---------|:-------|---------:|--------:|---------:|----------:|------:|:--------------|--------:|-----------------------:|:---------------------------|------------:|
+|:----------------------|:---------|:-------|---------:|--------:|---------:|----------:|------:|--------------:|--------:|-----------------------:|---------------------------:|------------:|
 | ESPORTSTMNT01_2690210 | LCKC     | Blue   |        0 |       9 |       19 |        19 |  1.4  | 0             | 1981.09 |                3537.2  | 2364.7285                  |       47070 |
 | ESPORTSTMNT01_2690210 | LCKC     | Red    |        1 |      19 |        9 |        62 |  8.1  | 1             | 2799.02 |                3009.67 | 2872.3292                  |       52617 |
 | ESPORTSTMNT01_2690219 | LCKC     | Blue   |        0 |       3 |       16 |         7 |  0.59 | 0             | 1690.98 |                2984.02 | 3109.6121                  |       57629 |
@@ -55,7 +59,7 @@ For the univariate analysis, the below plot shows the distribution of team KDA r
 <!-- Insert graph -->
 <iframe
   src="assets/kda-distribution.html"
-  width="1000"
+  width="800"
   height="600"
   frameborder="0"
 ></iframe>
@@ -65,7 +69,7 @@ Another univariate analysis I performed is shown below with the distribution of 
 <!-- Insert graph -->
 <iframe
   src="assets/dpm-distribution.html"
-  width="1000"
+  width="800"
   height="600"
   frameborder="0"
 ></iframe>
@@ -76,7 +80,7 @@ For the bivariate analysis, the below chart shows how many teams won with the fi
 <!-- Insert graph -->
 <iframe
   src="assets/win-piechart.html"
-  width="1000"
+  width="800"
   height="600"
   frameborder="0"
 ></iframe>
@@ -86,7 +90,7 @@ Another bivaraiate analysis I performed is shown below with the distributions of
 <!-- Insert graph -->
 <iframe
   src="assets/kda-boxplot.html"
-  width="1000"
+  width="800"
   height="600"
   frameborder="0"
 ></iframe>
