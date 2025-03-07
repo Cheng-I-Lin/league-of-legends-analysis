@@ -9,7 +9,7 @@ Author: Cheng-I (Alan) Lin
 ### General Information
 **League of Legends**, otherwise commonly known as **LOL**, is a popular multiplayer online battle arena video game developed and published by Riot Games in 2009. 
 
-In a regular game of LOL, 10 players are divided into two teams of 5 that compete against each other in player-versus-player combat. Each player would be able to select a **champion**, playable character with unique abilities and differing styles of play, controlling them to eliminate opposing champions and pushing through all defensive turrets (towers) to destroy the enemy main base **Nexus**, which is the main objective of the game. To help champions progress within the game in terms of strength (damage output or defensive capabilities) or other ability based upgrades, LOL also introduces the concept of 
+In a regular game of LOL, 10 players are divided into two teams of 5 that compete against each other in player-versus-player (PvP) combat. Each player would be able to select a **champion**, playable character with unique abilities and differing styles of play, controlling them to eliminate opposing champions and pushing through all defensive turrets (towers) to destroy the enemy main base **Nexus**, which is the main objective of the game. To help champions progress within the game in terms of strength (damage output or defensive capabilities) or other ability based upgrades, LOL also introduces the concept of 
 
 **monsters**
 
@@ -84,7 +84,8 @@ For the bivariate analysis, the below chart shows how many teams won with the fi
   height="600"
   frameborder="0"
 ></iframe>
-According to the pie chart, teams with the first dragon kill wins the match approximately 57.7% of the time. This significant win rate suggests that most teams that obtained the first dragon kill ultimately wins the game, implying that trying to secure a dragon kill first can be a viable strategy that could lead to an advantageous start and to overall success.
+
+According to the pie chart, teams with the first dragon kill wins the match approximately **57.7%** of the time. This significant win rate suggests that most teams that obtained the first dragon kill ultimately wins the game, implying that trying to secure a dragon kill first can be a viable strategy that could lead to an advantageous start and to overall success. 
 
 Another bivaraiate analysis I performed is shown below with the distributions of team KDA ratios based on their respective first dragon kill status:
 <!-- Insert graph -->
@@ -94,7 +95,8 @@ Another bivaraiate analysis I performed is shown below with the distributions of
   height="600"
   frameborder="0"
 ></iframe>
-According to the box plots, teams with the first dragon kill has a slightly higher KDA
+
+According to the box plots, both the team with and without the first dragon kill have similar distributions when it comes to KDA, yet teams with the first dragon kill has a higher overall KDA with highers values in the first quartile, median, and third quartile: **1.53** to 1.13, **4.07** to 2.255, and **7.29** to 5.69, respectively. This implies that obtaining the first dragon kill greatly associates with better player performances in terms of eliminating enemy champions due to the various buffs and benefits it provides, which deems securing the first dragon kill a valuable tactic to execute in game.
 
 ### Interesting Aggregates
 Below are some of the aggregated statistics of the dataset:
@@ -104,7 +106,7 @@ Below are some of the aggregated statistics of the dataset:
 | 0.422969 | 13.6692 |  15.5542 |   30.3549 | 4.03649 | 2054.97 |                2956.4  |                    2577.55 |     56223.9 |
 | 0.57706  | 15.5269 |  13.7008 |   34.526  | 5.31485 | 2141.88 |                2930.35 |                    2637.62 |     57845.8 |
 
-By grouping the dataset by `firstdragon`, I calculated the average value of all relevant statistics. By comparing these categories with and without first dragon kill, we can easily visualize the difference in average team statistics with and without first dragon kill. From the table, it's evident that the team with the first dragon kill averages more wins, kills, assists, damages per minute, damage mitigated per minute, and total gold, all while averaging less deaths and damage taken per minute. This suggests that, on average, teams with the first dragon kill are performing better in all major gaming statistics.
+By grouping the dataset by `firstdragon`, I calculated the average value of all relevant statistics. By comparing these categories with and without first dragon kill, we can easily visualize the difference in average team statistics with and without first dragon kill. From the table, it's evident that the team with the first dragon kill averages more wins, kills, assists, KDA, damages per minute, damage mitigated per minute, and total gold, all while averaging less deaths and damage taken per minute. This suggests that, on average, teams with the first dragon kill are performing better in all major gaming statistics.
 
 ## Assessment of Missingness
 ### NMAR Analysis
@@ -187,24 +189,28 @@ Next, let's look at the missingness dependency between the columns `damagemitiga
 **Alternative Hypothesis**: The distribution of `side` when `damagemitigatedperminute` is missing is different from the distribution of `side` when `damagemitigatedperminute` is not missing.
 
 ## Hypothesis Testing
-**Null Hypothesis**: The distribution of kda ratio for winning games for the team that gets the first dragon kill is the same as the team that does not get the first dragon.
-**Alternative Hypothesis**: The distribution of kda ratio for winning games for the team that gets the first dragon kill is not the same as the team that does not get the first dragon.
-**Test Statistic**: Absolute mean difference between the teams' kda ratios with and without first dragon kill
+To understand the relationship between first dragon kill and overall team performance, I conducted a hypothesis test that aims to determine if there's a statistically significant difference between the distribution of KDA ratios for the teams that secured the first dragon kill and the teams that did not. By doing so, one can better understand how securing the first dragon kill could lead to enhanced gameplays in terms of obtaining more kills/assists while dying a fewer number of times, which is what the KDA ratio depicts.
+
+**Null Hypothesis**: The distribution of KDA ratios for the teams that got the first dragon kill is the same as the teams that did not get the first dragon
+**Alternative Hypothesis**: The distribution of KDA ratios for the teams that got the first dragon kill is **NOT** the same as the teams that did not get the first dragon
+**Test Statistic**: Absolute mean difference between the teams' KDA ratios with and without first dragon kill
 **Significance Level**: 5% (0.05)
-<!-- Does mean diff work? Same dist? -->
+<!-- Graph -->
+Based on the hypothesis test, which performed 500 iterations of permutation tests on the dataset, the resulting p-value is **0.0**, thus the null hypothesis is **rejected** as the p-value is lower than the significance level of **0.05**. Since there's a statistically significant result, this suggests that the distribution between KDA ratios for teams that secured the first dragon kill and teams that did not is different. Consequently, this shows 
 
 ## Framing a Prediction Problem
 From the hypothesis testing, it's statistically significant to conclude that securing the first dragon kill can lead to a better team performance. Therefore, we can try to predict if a team would win or lose a game given whether they obtained the first dragon kill or not along with some other important team statistics.
 
 ## Baseline Model
-Now, it's time to make a predictive baseline model that can answer our prediction question. For the baseline model, I utilized a <!--model name-->, which contains the following features: `kills`, `deaths`, `assists`, and `firstdragon`. Among all these feature, all of them are quantitative except `firstdragon`, which is a nominal categorical variable already in binary form (0 and 1) that does not require further encodings. For the rest of the quantitative features (`kills`, `deaths`, and `assists`), I performed a 
+Now, it's time to make a predictive baseline model that can answer our prediction question. For the baseline model, I utilized a Random Forest Classifier, which contains the following features: `kills`, `assists`, `firstdragon`, and `dpm`. In a general PvP video game of any kind, usually the player with the better offensive skills would win more frequently. Therefore, this model utlizes the features that are directly correlated to attacking outputs to predict the outcome of the match. Among all these feature, all of them are quantitative except `firstdragon`, which is a nominal categorical variable already in binary form (0 and 1) that does not require further encodings. For the rest of the quantitative features (`kills`, `assists`, and `dpm`), I performed a 
 
 ## Final Model
-For the final model, I added four more features: `dpm`, `damagetakenperminute`, `damagemitigatedperminute`, and `totalgold`. In a typical LOL game, it is intuitively assumed that the team who dealt the most damage or avoid the most damage would have an advantage as they would be able to eliminate more enemies while staying alive for a longer period of time. Therefore, the features `dpm`, `damagetakenperminute`, and `damagemitigatedperminute` would provide the model with the extra information needed to determine which team has a winning advantage. Moreover, gold is crucial for the players to upgrade the champions offense and defense. With enhanced offensive and defensive skills, one can more easily 
+For the final model, I added four more features: `kda`, `damagetakenperminute`, `damagemitigatedperminute`, and `totalgold`. In a typical LOL game, it is intuitively assumed that the team who dealt the most damage or avoided the most damage would have an advantage as they would be able to eliminate more enemies while staying alive for a longer period of time. Therefore, the features `damagetakenperminute` and `damagemitigatedperminute` would provide the model with the extra information needed to determine which team has a winning advantage. Moreover, gold is crucial for the players to upgrade the champions' offense and defense. With enhanced offensive and defensive skills, one can more easily defeat enemy champions and capture opposing Nexus to win the game.
 
 ## Fairness Analysis
+Even though the model mentioned above may seem to be accurate, but accuracy does not imply fairness. For a model to be fair, it needs to treat all groups of values in the same way. Therefore, this fairness analysis is conducted to answer the following question: **Does the model perform worse for teams with a KDA ratio less than or equal to 5 than it does for teams with a KDA ratio greater than 5?**
 
-**Null Hypothesis**: 
-**Alternative Hypothesis**: 
-**Test Statistic**: 
-**Significance Level**: 
+**Null Hypothesis**: The model is fair, as its accuracy for teams with a KDA ratio less than or equal to 5 is same as its accuracy for teams with a KDA ratio greater than 100
+**Alternative Hypothesis**: The model is unfair, as its accuracy for teams with a KDA ratio less than or equal to 5 is **NOT** the same as the accuracy for teams with a KDA ratio greater than 5
+**Test Statistic**: Difference in accuracy between teams with a KDA ratio less than or greater than 5
+**Significance Level**: 5% (0.05)
