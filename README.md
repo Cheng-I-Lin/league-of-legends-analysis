@@ -42,6 +42,14 @@ Next, to further condense the information present in the dataset, I created one 
 
 I realized that some columns contain missing values, specifically in the columns `dpm`. Therefore, 
 
+| gameid                | league   | side   |   result |   kills |   deaths |   assists |   kda | firstdragon   |     dpm |   damagetakenperminute | damagemitigatedperminute   |   totalgold |
+|:----------------------|:---------|:-------|---------:|--------:|---------:|----------:|------:|:--------------|--------:|-----------------------:|:---------------------------|------------:|
+| ESPORTSTMNT01_2690210 | LCKC     | Blue   |        0 |       9 |       19 |        19 |  1.4  | 0             | 1981.09 |                3537.2  | 2364.7285                  |       47070 |
+| ESPORTSTMNT01_2690210 | LCKC     | Red    |        1 |      19 |        9 |        62 |  8.1  | 1             | 2799.02 |                3009.67 | 2872.3292                  |       52617 |
+| ESPORTSTMNT01_2690219 | LCKC     | Blue   |        0 |       3 |       16 |         7 |  0.59 | 0             | 1690.98 |                2984.02 | 3109.6121                  |       57629 |
+| ESPORTSTMNT01_2690219 | LCKC     | Red    |        1 |      16 |        3 |        39 | 13.75 | 1             | 2124.55 |                2745.72 | 2868.4201                  |       71004 |
+| 8401-8401_game_1      | LPL      | Blue   |        1 |      13 |        6 |        35 |  6.86 | <NA>          | 1762.02 |                2263.25 | <NA>                       |       45468 |
+
 ### Univariate Analysis
 For the univariate analysis, the below plot shows the distribution of team KDA ratio in the dataset:
 <!-- Insert graph -->
