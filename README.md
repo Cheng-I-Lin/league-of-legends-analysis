@@ -56,28 +56,30 @@ Below is the head of the cleaned dataframe:
 
 ### Univariate Analysis
 For the univariate analysis, the below plot shows the distribution of team KDA ratio in the dataset:
-<!-- Insert graph -->
+
 <iframe
   src="assets/kda-distribution.html"
   width="850"
   height="600"
   frameborder="0"
 ></iframe>
+
 The histogram clearly shows a extremely right skewed distribution of team KDA ratio, indicating that most teams performed relatively "normally", with a lower KDA that's to be expected. Yet, there are some teams that performed significantly better, killing and assiting a lot more within a match while dying on a lower interval, hence creating this right skewed distribution. This is also to be expected as in some rare cases there will be matches where one team is superior than the other, and this large gap in skills and experience can lead to extreme outliers in team KDA ratio.
 
 Another univariate analysis I performed is shown below with the distribution of team damage per minute (DPM):
-<!-- Insert graph -->
+
 <iframe
   src="assets/dpm-distribution.html"
   width="850"
   height="600"
   frameborder="0"
 ></iframe>
+
 The histogram shows a nearly normal distribution with a slightly right skewed tail, indicating that the data is well-behaved as all team DPMs are relatively balanced for both team. This means that no teams had a significantly more damage output than their counterpart opponenets, which is fairly typical for such gaming scenarios. Note that although there are some outliers in team KDA distribution, there aren't really any in team DPM distribution. This is because although that both teams can deal similar amounts of damage to each other, ultimately one team is better at getting the kills or getting away with low health, thus producing a large gap in the KDA department even with similar damage output.
 
 ### Bivariate Analysis
 For the bivariate analysis, the below chart shows how many teams won with the first dragon kill and how many teams lost despite obtaining the first dragon kill:
-<!-- Insert graph -->
+
 <iframe
   src="assets/win-piechart.html"
   width="850"
@@ -88,7 +90,7 @@ For the bivariate analysis, the below chart shows how many teams won with the fi
 According to the pie chart, teams with the first dragon kill wins the match approximately **57.7%** of the time. This significant win rate suggests that most teams that obtained the first dragon kill ultimately wins the game, implying that trying to secure a dragon kill first can be a viable strategy that could lead to an advantageous start and to overall success. 
 
 Another bivaraiate analysis I performed is shown below with the distributions of team KDA ratios based on their respective first dragon kill status:
-<!-- Insert graph -->
+
 <iframe
   src="assets/kda-boxplot.html"
   width="850"
@@ -176,7 +178,15 @@ First, let's look at the missingness dependency between the columns `damagemitig
 | WLDs            |                    0.013232   |                   0.00739958 |
 
 **Null Hypothesis**: The distribution of `league` when `damagemitigatedperminute` is missing is the same as the distribution of `league` when `damagemitigatedperminute` is not missing.
+
 **Alternative Hypothesis**: The distribution of `league` when `damagemitigatedperminute` is missing is different from the distribution of `league` when `damagemitigatedperminute` is not missing.
+
+<iframe
+  src="assets/missing-league.html"
+  width="850"
+  height="600"
+  frameborder="0"
+></iframe>
 
 Next, let's look at the missingness dependency between the columns `damagemitigatedperminute` and `side`.
 
@@ -186,7 +196,15 @@ Next, let's look at the missingness dependency between the columns `damagemitiga
 | Red    |                    0.5 |                   0.5 |
 
 **Null Hypothesis**: The distribution of `side` when `damagemitigatedperminute` is missing is the same as the distribution of `side` when `damagemitigatedperminute` is not missing.
+
 **Alternative Hypothesis**: The distribution of `side` when `damagemitigatedperminute` is missing is different from the distribution of `side` when `damagemitigatedperminute` is not missing.
+
+<iframe
+  src="assets/missing-side.html"
+  width="850"
+  height="600"
+  frameborder="0"
+></iframe>
 
 ## Hypothesis Testing
 To understand the relationship between first dragon kill and overall team performance, I conducted a hypothesis test that aims to determine if there's a statistically significant difference between the distribution of KDA ratios for the teams that secured the first dragon kill and the teams that did not. By doing so, one can better understand how securing the first dragon kill could lead to enhanced gameplays in terms of obtaining more kills/assists while dying a fewer number of times, which is what the KDA ratio depicts.
@@ -200,6 +218,13 @@ To understand the relationship between first dragon kill and overall team perfor
 **Significance Level**: 5% (0.05)
 
 <!-- Graph -->
+<iframe
+  src="assets/hypothesis.html"
+  width="850"
+  height="600"
+  frameborder="0"
+></iframe>
+
 Based on the hypothesis test, which performed 500 iterations of permutation tests on the dataset, the resulting p-value is **0.0**, thus the null hypothesis is **rejected** as the p-value is lower than the significance level of **0.05**. Since there's a statistically significant result, this suggests that the distribution between KDA ratios for teams that secured the first dragon kill and teams that did not is different. Consequently, this shows 
 
 ## Framing a Prediction Problem
