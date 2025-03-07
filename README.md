@@ -99,21 +99,89 @@ According to the box plots, teams with the first dragon kill has a slightly high
 ### Interesting Aggregates
 Below are some of the aggregated statistics of the dataset:
 <!-- Insert table -->
+|   result |   kills |   deaths |   assists |     kda |     dpm |   damagetakenperminute |   damagemitigatedperminute |   totalgold |
+|---------:|--------:|---------:|----------:|--------:|--------:|-----------------------:|---------------------------:|------------:|
+| 0.422969 | 13.6692 |  15.5542 |   30.3549 | 4.03649 | 2054.97 |                2956.4  |                    2577.55 |     56223.9 |
+| 0.57706  | 15.5269 |  13.7008 |   34.526  | 5.31485 | 2141.88 |                2930.35 |                    2637.62 |     57845.8 |
+
 By grouping the dataset by `firstdragon`, I calculated the average value of all relevant statistics. By comparing these categories with and without first dragon kill, we can easily visualize the difference in average team statistics with and without first dragon kill. From the table, it's evident that the team with the first dragon kill averages more wins, kills, assists, damages per minute, damage mitigated per minute, and total gold, all while averaging less deaths and damage taken per minute. This suggests that, on average, teams with the first dragon kill are performing better in all major gaming statistics.
 
 ## Assessment of Missingness
 ### NMAR Analysis
-In the dataset, I believe that columns `ban1`, `ban2`, `ban3`, `ban4`, and `ban5` are likely not missing at random (NMAR). Each of these ban columns has an unique number of missing values, 
+In the dataset, I believe that columns `ban1`, `ban2`, `ban3`, `ban4`, and `ban5` are likely not missing at random (NMAR). Each of these ban columns has an unique number of missing values (2334, 2202, 2520, 2400, and 2724, respectively) and does not possess any specific trends of missingness or any missingness dependency with other columns. This is likely due to the fact that in a competitive LOL match, each player gets to decide which champion he or she would like to ban before other players begin their champion selection phase. However, a player is not required to ban a champion in the given time, thus creating the missing values in the five ban columns as some players decided not to ban any champions. Therefore, the columns are NMAR because they are only missing when the players chose not to ban any champion, meaning the missingness of these values depends on the actual values themselves. To better explain the missingness of the five ban columns, making them missing at random (MAR) instead of NMAR, one additional data I would obtain is `all_bans`, which is a binary data with 1 indicating all players from a team have banned a champion, and 0 indicating at least one player in the team did not ban any champion. By adding this column of data, one can easily determine if there's a missing value in one of the five ban columns just by looking at `all_bans`, which helps explain the missingness.
 
 ### Missingness Dependency
 Besides the ban columns that contain missing values, the `damagemitigatedperminute` column is also missing values ( to be exact). Therefore, I decided to test if the missingness of this column depend on other columns in the dataset, specifically the columns `league` and `side`. To test this missingness dependency, a permutation test is required. Consequently, I chose a significance level of 0.05 (5%) using **total variance distance** (TVD) as the test statistic to conduct the test.
 
 First, let's look at the missingness dependency between the columns `damagemitigatedperminute` and `league`.
 
+| league          |   firstdragon_missing = False |   firstdragon_missing = True |
+|:----------------|------------------------------:|-----------------------------:|
+| ASCI            |                    0          |                   0.0391121  |
+| CBLOL           |                    0.0228041  |                   0          |
+| CBLOLA          |                    0.0202703  |                   0          |
+| CDF             |                    0.00713213 |                   0          |
+| CT              |                    0.00243994 |                   0          |
+| DCup            |                    0          |                   0.0406977  |
+| DDH             |                    0.0196134  |                   0          |
+| EBL             |                    0.0155781  |                   0          |
+| EBLPA           |                    0.00178303 |                   0          |
+| EL              |                    0.0126689  |                   0          |
+| ESLOL           |                    0.0225225  |                   0          |
+| EUM             |                    0.0250563  |                   0          |
+| GL              |                    0.0163288  |                   0          |
+| GLL             |                    0.0146396  |                   0          |
+| GLLPA           |                    0.00441066 |                   0          |
+| HC              |                    0.0152027  |                   0          |
+| HM              |                    0.0143581  |                   0          |
+| IC              |                    0.00703829 |                   0          |
+| LAS             |                    0.0213026  |                   0          |
+| LCK             |                    0.0438251  |                   0          |
+| LCKC            |                    0.0370683  |                   0          |
+| LCL             |                    0.0015015  |                   0          |
+| LCO             |                    0.0198949  |                   0          |
+| LCS             |                    0.0287162  |                   0          |
+| LCSA            |                    0.0506757  |                   0          |
+| LDL             |                    0          |                   0.497357   |
+| LEC             |                    0.0228041  |                   0          |
+| LFL             |                    0.0231794  |                   0          |
+| LFL2            |                    0.0226164  |                   0          |
+| LHE             |                    0.0228979  |                   0          |
+| LJL             |                    0.0201764  |                   0          |
+| LJLA            |                    0.00356607 |                   0          |
+| LLA             |                    0.0175488  |                   0          |
+| LMF             |                    0.03003    |                   0          |
+| LPL             |                    0          |                   0.415433   |
+| LPLOL           |                    0.0199887  |                   0          |
+| LVP SL          |                    0.0229917  |                   0          |
+| MSI             |                    0.00750751 |                   0          |
+| NEXO            |                    0.0182057  |                   0          |
+| NLC             |                    0.0228979  |                   0          |
+| NLC Aurora Open |                    0.0131381  |                   0          |
+| PCS             |                    0.0256194  |                   0          |
+| PGC             |                    0.0529279  |                   0          |
+| PGN             |                    0.0140766  |                   0          |
+| PRM             |                    0.022241   |                   0          |
+| PRMP            |                    0.0126689  |                   0          |
+| SL (LATAM)      |                    0.0154842  |                   0          |
+| TAL             |                    0.019238   |                   0          |
+| TCL             |                    0.0209272  |                   0          |
+| UL              |                    0.0228979  |                   0          |
+| UPL             |                    0.0386637  |                   0          |
+| USP             |                    0.00319069 |                   0          |
+| VCS             |                    0.0304992  |                   0          |
+| VL              |                    0.0159535  |                   0          |
+| WLDs            |                    0.013232   |                   0.00739958 |
+
 **Null Hypothesis**: The distribution of `league` when `damagemitigatedperminute` is missing is the same as the distribution of `league` when `damagemitigatedperminute` is not missing.
 **Alternative Hypothesis**: The distribution of `league` when `damagemitigatedperminute` is missing is different from the distribution of `league` when `damagemitigatedperminute` is not missing.
 
 Next, let's look at the missingness dependency between the columns `damagemitigatedperminute` and `side`.
+
+| side   |   side_missing = False |   side_missing = True |
+|:-------|-----------------------:|----------------------:|
+| Blue   |                    0.5 |                   0.5 |
+| Red    |                    0.5 |                   0.5 |
 
 **Null Hypothesis**: The distribution of `side` when `damagemitigatedperminute` is missing is the same as the distribution of `side` when `damagemitigatedperminute` is not missing.
 **Alternative Hypothesis**: The distribution of `side` when `damagemitigatedperminute` is missing is different from the distribution of `side` when `damagemitigatedperminute` is not missing.
