@@ -59,7 +59,7 @@ For the univariate analysis, the below plot shows the distribution of team KDA r
 <!-- Insert graph -->
 <iframe
   src="assets/kda-distribution.html"
-  width="800"
+  width="850"
   height="600"
   frameborder="0"
 ></iframe>
@@ -69,7 +69,7 @@ Another univariate analysis I performed is shown below with the distribution of 
 <!-- Insert graph -->
 <iframe
   src="assets/dpm-distribution.html"
-  width="800"
+  width="850"
   height="600"
   frameborder="0"
 ></iframe>
@@ -80,7 +80,7 @@ For the bivariate analysis, the below chart shows how many teams won with the fi
 <!-- Insert graph -->
 <iframe
   src="assets/win-piechart.html"
-  width="800"
+  width="850"
   height="600"
   frameborder="0"
 ></iframe>
@@ -90,7 +90,7 @@ Another bivaraiate analysis I performed is shown below with the distributions of
 <!-- Insert graph -->
 <iframe
   src="assets/kda-boxplot.html"
-  width="800"
+  width="850"
   height="600"
   frameborder="0"
 ></iframe>
