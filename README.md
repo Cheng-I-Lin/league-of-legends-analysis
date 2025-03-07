@@ -100,7 +100,7 @@ According to the box plots, both the team with and without the first dragon kill
 
 ### Interesting Aggregates
 Below are some of the aggregated statistics of the dataset:
-<!-- Insert table -->
+
 |   result |   kills |   deaths |   assists |     kda |     dpm |   damagetakenperminute |   damagemitigatedperminute |   totalgold |
 |---------:|--------:|---------:|----------:|--------:|--------:|-----------------------:|---------------------------:|------------:|
 | 0.422969 | 13.6692 |  15.5542 |   30.3549 | 4.03649 | 2054.97 |                2956.4  |                    2577.55 |     56223.9 |
@@ -192,9 +192,13 @@ Next, let's look at the missingness dependency between the columns `damagemitiga
 To understand the relationship between first dragon kill and overall team performance, I conducted a hypothesis test that aims to determine if there's a statistically significant difference between the distribution of KDA ratios for the teams that secured the first dragon kill and the teams that did not. By doing so, one can better understand how securing the first dragon kill could lead to enhanced gameplays in terms of obtaining more kills/assists while dying a fewer number of times, which is what the KDA ratio depicts.
 
 **Null Hypothesis**: The distribution of KDA ratios for the teams that got the first dragon kill is the same as the teams that did not get the first dragon
+
 **Alternative Hypothesis**: The distribution of KDA ratios for the teams that got the first dragon kill is **NOT** the same as the teams that did not get the first dragon
+
 **Test Statistic**: Absolute mean difference between the teams' KDA ratios with and without first dragon kill
+
 **Significance Level**: 5% (0.05)
+
 <!-- Graph -->
 Based on the hypothesis test, which performed 500 iterations of permutation tests on the dataset, the resulting p-value is **0.0**, thus the null hypothesis is **rejected** as the p-value is lower than the significance level of **0.05**. Since there's a statistically significant result, this suggests that the distribution between KDA ratios for teams that secured the first dragon kill and teams that did not is different. Consequently, this shows 
 
@@ -211,6 +215,9 @@ For the final model, I added four more features: `kda`, `damagetakenperminute`, 
 Even though the model mentioned above may seem to be accurate, but accuracy does not imply fairness. For a model to be fair, it needs to treat all groups of values in the same way. Therefore, this fairness analysis is conducted to answer the following question: **Does the model perform worse for teams with a KDA ratio less than or equal to 5 than it does for teams with a KDA ratio greater than 5?**
 
 **Null Hypothesis**: The model is fair, as its accuracy for teams with a KDA ratio less than or equal to 5 is same as its accuracy for teams with a KDA ratio greater than 100
+
 **Alternative Hypothesis**: The model is unfair, as its accuracy for teams with a KDA ratio less than or equal to 5 is **NOT** the same as the accuracy for teams with a KDA ratio greater than 5
+
 **Test Statistic**: Difference in accuracy between teams with a KDA ratio less than or greater than 5
+
 **Significance Level**: 5% (0.05)
