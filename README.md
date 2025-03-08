@@ -18,21 +18,20 @@ Within the game of LOL, the concept of **dragons** is a special type of monster 
 
 
 ### Row/Column Information
-The relevant rows included in the dataset are
+The dataset includes an extensive array of gaming statistics, such as player and team performance metrics in the forms of match results, number of kills, and many other important gameplay features, gathered from professional League of Legends esports tournament matches in the year 2022. Overall, there are **150588** rows and **161** columns in the dataset. However, not all rows and columns are necessary for the analytical purposes of this report. The following shows the relevant columns that would be used in the latter parts of this analysis and brief descriptions of what their values represent:
 
-Below are relevant columns that are nececcary for analytical purposes and their descriptions
-- `gameid`: This column contains an unique identifier for each individual match played in the dataset, allowing to distinguish between different matches.
-- `league`: This column represents the specific league tournament where the matches are held.
-- `side`: This column denotes the team within the game each participating team is associated with. In an official match, the teams are separated into "blue" and "red" teams that compete against each other.
-- `result`: This column indicates the outcome of whether a team has won or lost the match, with 1 indicating a win and 0 indicating a loss.
-- `kills`: This column records the total number of kills -- enemy champion eliminations -- a team has throughout the match.
-- `deaths`: This column records the total number of deaths -- eliminations by enemy champions or other in game mechanisms such as minions or monsters -- a team has throughout the match.
-- `assists`: This column records the number of assists -- contribtuions to enemy champion eliminations, but no direct kills -- credited to a team throughout the match.
-- `firstdragon`: This column indicates the outcome of whether a team has successfully obtained the first dragon kill, with 1 representing the team with the first dragon kill and 0 representing the team without the first dragon kill.
-- `dpm`: This column quantifies the amount of total damage outputted by all five players in a team per minute through basic , reflecting the . <!--Need more info-->
-- `damagetakenperminute`: This column quantifies the amount of total damage taken by all five players in a team per minute, reflecting the . <!--Need more info-->
-- `damagemitigatedperminute`: This column quantifies the amount of total damage mitigated by all five players in a team per minute. By mitigating damage, it means that, reflecting <!--Need more info-->
-- `totalgold`: This column quantifies the total amount of gold obtained by a team throughout the match. Gold is the in game currency used for various strategic <!--Need more info-->
+- `gameid` This column contains an unique identifier for each individual match played in the dataset, allowing to distinguish between different matches.
+- `league` This column represents the specific league tournament where the matches are held.
+- `side` This column denotes the team within the game each participating team is associated with. In an official match, the teams are separated into "blue" and "red" teams that compete against each other.
+- `result` This column indicates the outcome of whether a team has won or lost the match, with 1 indicating a win and 0 indicating a loss.
+- `kills` This column records the total number of kills -- enemy champion eliminations -- a team has throughout the match.
+- `deaths` This column records the total number of deaths -- eliminations by enemy champions or other in game mechanisms such as minions or monsters -- a team has throughout the match.
+- `assists` This column records the number of assists -- contribtuions to enemy champion eliminations, but no direct kills -- credited to a team throughout the match.
+- `firstdragon` This column indicates the outcome of whether a team has successfully obtained the first dragon kill, with 1 representing the team with the first dragon kill and 0 representing the team without the first dragon kill.
+- `dpm` This column quantifies the amount of total damage outputted by all five players in a team per minute through basic , reflecting the . <!--Need more info-->
+- `damagetakenperminute` This column quantifies the amount of total damage taken by all five players in a team per minute, reflecting the . <!--Need more info-->
+- `damagemitigatedperminute` This column quantifies the amount of total damage mitigated by all five players in a team per minute. By mitigating damage, it means that, reflecting <!--Need more info-->
+- `totalgold` This column quantifies the total amount of gold obtained by a team throughout the match. Gold is the in game currency used for various strategic <!--Need more info-->
 
 ## Data Cleaning and Exploratory Data Analysis
 ### Data Cleaning
@@ -231,7 +230,8 @@ Based on the hypothesis test, which performed 500 iterations of permutation test
 From the hypothesis testing, it's statistically significant to conclude that securing the first dragon kill can lead to a better team performance. Therefore, we can try to predict if a team would win or lose a game given whether they obtained the first dragon kill or not along with some other important team statistics.
 
 <!--Insert table-->
-Below is the dataframe with all the information necessary for the training, analysis, and testing phases of the predictive model:
+Below is the head of the dataframe with all the information necessary for the training, analysis, and testing phases of the predictive model:
+
 |    |   result |   kills |   deaths |   assists |   kda | firstdragon   |     dpm |   damagetakenperminute | damagemitigatedperminute   |   totalgold |
 |---:|---------:|--------:|---------:|----------:|------:|:--------------|--------:|-----------------------:|:---------------------------|------------:|
 |  0 |        0 |       9 |       19 |        19 |  1.4  | 0             | 1981.09 |                3537.2  | 2364.7285                  |       47070 |
