@@ -119,6 +119,7 @@ Besides the ban columns that contain missing values, the `damagemitigatedperminu
 
 First, let's look at the missingness dependency between the columns `damagemitigatedperminute` and `league`.
 
+<div style="align:center">
 | league          |   firstdragon_missing = False |   firstdragon_missing = True |
 |:----------------|------------------------------:|-----------------------------:|
 | ASCI            |                    0          |                   0.0391121  |
@@ -176,6 +177,7 @@ First, let's look at the missingness dependency between the columns `damagemitig
 | VCS             |                    0.0304992  |                   0          |
 | VL              |                    0.0159535  |                   0          |
 | WLDs            |                    0.013232   |                   0.00739958 |
+</div>
 
 **Null Hypothesis**: The distribution of `league` when `damagemitigatedperminute` is missing is the same as the distribution of `league` when `damagemitigatedperminute` is not missing.
 
