@@ -230,6 +230,16 @@ Based on the hypothesis test, which performed 500 iterations of permutation test
 ## Framing a Prediction Problem
 From the hypothesis testing, it's statistically significant to conclude that securing the first dragon kill can lead to a better team performance. Therefore, we can try to predict if a team would win or lose a game given whether they obtained the first dragon kill or not along with some other important team statistics.
 
+<!--Insert table-->
+Below is the dataframe with all the information necessary for the training, analysis, and testing phases of the predictive model:
+|    |   result |   kills |   deaths |   assists |   kda | firstdragon   |     dpm |   damagetakenperminute | damagemitigatedperminute   |   totalgold |
+|---:|---------:|--------:|---------:|----------:|------:|:--------------|--------:|-----------------------:|:---------------------------|------------:|
+|  0 |        0 |       9 |       19 |        19 |  1.4  | 0             | 1981.09 |                3537.2  | 2364.7285                  |       47070 |
+|  1 |        1 |      19 |        9 |        62 |  8.1  | 1             | 2799.02 |                3009.67 | 2872.3292                  |       52617 |
+|  2 |        0 |       3 |       16 |         7 |  0.59 | 0             | 1690.98 |                2984.02 | 3109.6121                  |       57629 |
+|  3 |        1 |      16 |        3 |        39 | 13.75 | 1             | 2124.55 |                2745.72 | 2868.4201                  |       71004 |
+|  4 |        1 |      13 |        6 |        35 |  6.86 | <NA>          | 1762.02 |                2263.25 | <NA>                       |       45468 |
+
 ## Baseline Model
 Now, it's time to make a predictive baseline model that can answer our prediction question. For the baseline model, I utilized a Random Forest Classifier, which contains the following features: `kills`, `assists`, `firstdragon`, and `dpm`. In a general PvP video game of any kind, usually the player with the better offensive skills would win more frequently. Therefore, this model utlizes the features that are directly correlated to attacking outputs to predict the outcome of the match. Among all these feature, all of them are quantitative except `firstdragon`, which is a nominal categorical variable already in binary form (0 and 1) that does not require further encodings. For the rest of the quantitative features (`kills`, `assists`, and `dpm`), I performed a 
 
