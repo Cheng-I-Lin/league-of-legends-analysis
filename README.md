@@ -119,7 +119,8 @@ Besides the ban columns that contain missing values, the `damagemitigatedperminu
 
 First, let's look at the missingness dependency between the columns `damagemitigatedperminute` and `league`.
 
-<div style="align:center">
+<div style="margin:auto">
+
 | league          |   firstdragon_missing = False |   firstdragon_missing = True |
 |:----------------|------------------------------:|-----------------------------:|
 | ASCI            |                    0          |                   0.0391121  |
@@ -177,6 +178,7 @@ First, let's look at the missingness dependency between the columns `damagemitig
 | VCS             |                    0.0304992  |                   0          |
 | VL              |                    0.0159535  |                   0          |
 | WLDs            |                    0.013232   |                   0.00739958 |
+
 </div>
 
 **Null Hypothesis**: The distribution of `league` when `damagemitigatedperminute` is missing is the same as the distribution of `league` when `damagemitigatedperminute` is not missing.
@@ -227,7 +229,7 @@ To understand the relationship between first dragon kill and overall team perfor
   frameborder="0"
 ></iframe>
 
-Based on the hypothesis test, which performed 500 iterations of permutation tests on the dataset, the resulting p-value is **0.0**, thus the null hypothesis is **rejected** as the p-value is lower than the significance level of **0.05**. Since there's a statistically significant result, this suggests that the distribution between KDA ratios for teams that secured the first dragon kill and teams that did not is different. Consequently, this shows 
+Based on the hypothesis test, which performed 500 iterations of permutation tests on the dataset, the resulting p-value is **0.0**, thus the null hypothesis is **rejected** as the p-value is lower than the significance level of **0.05**. Since there's a statistically significant result, this suggests that the distribution between KDA ratios for teams that secured the first dragon kill and teams that did not is different. Consequently, it demontrates that first dragon kills can have a significant positive impact on the teams' performances in terms of an increased KDA ratio.
 
 ## Framing a Prediction Problem
 From the hypothesis testing, it's statistically significant to conclude that securing the first dragon kill can lead to a better team performance. Therefore, we can try to predict if a team would win or lose a game given whether they obtained the first dragon kill or not along with some other important team statistics.
