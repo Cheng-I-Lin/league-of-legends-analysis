@@ -1,24 +1,21 @@
 # League of Legends First Dragon Analysis
 
-League of Legends First Dragon Analysis is a comprehensive data science project conducted at UCSD. Utilizing statistical analysis throughout the dataset, from exploratory data analysis to hypothesis testing, the project aims to create predictive models (baseline and final models), along with a concluding fairness analysis, that focuses on the investigation of the following question: 
-**How does killing the first dragon affect the overall team performance, statistics, and match outcome?**
+League of Legends First Dragon Analysis is a comprehensive data science project conducted at UCSD. Utilizing statistical analysis throughout the dataset, from exploratory data analysis to hypothesis testing, the project aims to create predictive models (baseline and final models), along with a concluding fairness analysis, that focuses on the investigation of the impacts of first dragon kill on overal team performance and game statistics. 
 
 Author: Cheng-I (Alan) Lin
 
 ## Introduction
 ### General Information
-**League of Legends**, otherwise commonly known as **LOL**, is a popular multiplayer online battle arena video game developed and published by Riot Games in 2009. 
+**League of Legends**, otherwise commonly known as **LOL** or simply **League**, is a popular multiplayer online battle arena video game developed and published by Riot Games in 2009. Through its free-to-play accessibility, interesting character designs, and unique gameplay mechanisms, League of Legends has soon gained worldwide popularity, highly regarded as one of the greatest video games ever made. Naturally, with millions of global players on a daily basis, professional League of Legends tournaments have quickly became one of the most viewed and anticipated esports in gaming history. The dataset used in this report includes professionally collected player, team, and match statistics by Oracle’s Elixir throughout League esports matches in 2022.
 
-In a regular game of LOL, 10 players are divided into two teams of 5 that compete against each other in player-versus-player (PvP) combat. Each player would be able to select a **champion**, playable character with unique abilities and differing styles of play, controlling them to eliminate opposing champions and pushing through all defensive turrets (towers) to destroy the enemy main base **Nexus**, which is the main objective of the game. To help champions progress within the game in terms of strength (damage output or defensive capabilities) or other ability based upgrades, LOL also introduces the concept of 
+In a regular game of LOL, 10 players are divided into two teams of 5 that compete against each other in player-versus-player (PvP) combat. Each player would be able to select a **champion**, playable character with unique abilities and differing styles of play, controlling them to eliminate opposing champions and pushing through all defensive turrets (towers) to destroy the enemy main base **Nexus**, which is the main objective of the game. To help champions progress within the game in terms of strength (damage output or defensive capabilities) or other ability based upgrades, LOL introduces the concept of **monsters** which are non-playable-characters (NPC) that provide experience points (XP), gold, and a variety of other benefits to the players that slained them.
 
-**monsters**
+Within the game of LOL, a **dragon** is a special type of monster that gives the player an unique buff depending on the type of dragon slained. For instance, killing the Inferno Dragon grants the champion 4% to 16% attack damage boost and provides 150 to 330 experience points depending on the level of the dragon, which progesses as the game goes on. Therefore, the faster one can succesffully kill a dragon, the more advantages one possesses when facing their oponents. This is regarded as the **first dragon kill**, referring to the initial kill of any type of dragons by a team in the beginning of the match. By securing the first dragon kill, there would be an immediate and noticeable effect between the difference of strength of the two teams, usually propelling the team with the first dragon kill toward an advantageous start.
 
-Within the game of LOL, the concept of **dragons** is a special type of monster that gives the player an unique buff depending on the type of dragon slained. For instance, killing the Inferno Dragon grants the champion 4% to 16% attack damage boost and provides 150 to 330 experience points depending on the level of the dragon, which progesses as the game goes on. 
-
-
+To fully understand the impact that first dragon kill has on the entire match, the analysis would be focused around the following question: **How does killing the first dragon affect the overall team performance, statistics, and match outcome?** Specifically, by utilizing the provided dataset, I want to statistically analyze how first dragon kill affects performance metrics, such as the KDA ratio (which would be discussed later) and damage outputs, and predict how it can impact the final result of the match. Through this predictive model, I can provide valuable information on how to enhance team productivity and elevate the level of gameplay by optimizing tatical strategies involving dragon kills, potentially increasing winning probabilities for the teams.
 
 ### Row/Column Information
-The dataset includes an extensive array of gaming statistics, such as player and team performance metrics in the forms of match results, number of kills, and many other important gameplay features, gathered from professional League of Legends esports tournament matches in the year 2022. Overall, there are **150588** rows and **161** columns in the dataset. However, not all rows and columns are necessary for the analytical purposes of this report. The following shows the relevant columns that would be used in the latter parts of this analysis and brief descriptions of what their values represent:
+The dataset includes an extensive array of gaming statistics, such as player and team performance metrics in the forms of match results, number of kills, and many other important gameplay features, gathered from professional League of Legends esports tournament matches in the year 2022. Overall, there are **150588** rows and **161** columns in the dataset. However, not all rows and columns are necessary for the analytical purposes of this report (the dataset would be cleaned in the **Data Cleaning** section). The following shows the relevant columns that would be used in the latter parts of this analysis and brief descriptions of what their values represent:
 
 - `gameid` This column contains an unique identifier for each individual match played in the dataset, allowing to distinguish between different matches.
 - `league` This column represents the specific league tournament where the matches are held.
@@ -41,9 +38,9 @@ In the original dataset, each match has 12 rows, with 10 rows representing each 
 
 Next, to further condense the information present in the dataset, I created one new column, `kda`, out of the given statistics. The `kda` column represents the **Kill-Death-Assist ratio**, calculated by adding the total number of team kills and team assists and divided by the number of team deaths in a given match. This statistic would help us better determine which team "performed" the best, as a higher KDA constritutes more kills and assists on a lower number of deaths, which contributes to winning the game as a whole as the team can terminate more enemy opponents before getting eliminated.
 
-I realized that some columns contain missing values, specifically in the columns `dpm`. Therefore, 
+I realized that some columns contain missing values, such as in the columns `dpm` and `damagetakenperminute`, which are missing two values each in the same two rows. Remember, since I already cleaned the dataset to contain only the team rows, two missing rows correspond to one specific match as there are two teams per match (thus two team rows). This means that there's only one game where both the data on `dpm` and `damagetakenperminute` are not recorded. Since this is only one instance of such missing values, I decided to drop both rows (drop the entire match) as there are still multiple matches left to analyze, hence one dropped match would have pose a significant impact on the overall analysis.
 
-Below is the head of the cleaned dataframe:
+Below is the head (first five entries) of the cleaned dataframe:
 
 | gameid                | league   | side   |   result |   kills |   deaths |   assists |   kda | firstdragon   |     dpm |   damagetakenperminute | damagemitigatedperminute   |   totalgold |
 |:----------------------|:---------|:-------|---------:|--------:|---------:|----------:|------:|--------------:|--------:|-----------------------:|---------------------------:|------------:|
@@ -114,9 +111,9 @@ By grouping the dataset by `firstdragon`, I calculated the average value of all 
 In the dataset, I believe that columns `ban1`, `ban2`, `ban3`, `ban4`, and `ban5` are likely not missing at random (NMAR). Each of these ban columns has an unique number of missing values (2334, 2202, 2520, 2400, and 2724, respectively) and does not possess any specific trends of missingness or any missingness dependency with other columns. This is likely due to the fact that in a competitive LOL match, each player gets to decide which champion he or she would like to ban before other players begin their champion selection phase. However, a player is not required to ban a champion in the given time, thus creating the missing values in the five ban columns as some players decided not to ban any champions. Therefore, the columns are NMAR because they are only missing when the players chose not to ban any champion, meaning the missingness of these values depends on the actual values themselves. To better explain the missingness of the five ban columns, making them missing at random (MAR) instead of NMAR, one additional data I would obtain is `all_bans`, which is a binary data with 1 indicating all players from a team have banned a champion, and 0 indicating at least one player in the team did not ban any champion. By adding this column of data, one can easily determine if there's a missing value in one of the five ban columns just by looking at `all_bans`, which helps explain the missingness.
 
 ### Missingness Dependency
-Besides the ban columns that contain missing values, the `damagemitigatedperminute` column is also missing values ( to be exact). Therefore, I decided to test if the missingness of this column depend on other columns in the dataset, specifically the columns `league` and `side`. To test this missingness dependency, a permutation test is required. Consequently, I chose a significance level of 0.05 (5%) using **total variance distance** (TVD) as the test statistic to conduct the test.
+Besides the ban columns that contain missing values, the `firstdragon` column is also missing values (3784 missing rows to be exact). Therefore, I decided to test if the missingness of this column depend on other columns in the dataset, specifically the columns `league` and `side`. To test this missingness dependency, a permutation test is required. Consequently, I chose a significance level of 0.05 (5%) using **total variance distance** (TVD) as the test statistic to conduct the test.
 
-First, let's look at the missingness dependency between the columns `damagemitigatedperminute` and `league`.
+First, let's look at the observed missingness dependency between the columns `firstdragon` and `league`.
 
 | league          |   firstdragon_missing = False |   firstdragon_missing = True |
 |:----------------|------------------------------:|-----------------------------:|
@@ -176,9 +173,11 @@ First, let's look at the missingness dependency between the columns `damagemitig
 | VL              |                    0.0159535  |                   0          |
 | WLDs            |                    0.013232   |                   0.00739958 |
 
-**Null Hypothesis**: The distribution of `league` when `damagemitigatedperminute` is missing is the same as the distribution of `league` when `damagemitigatedperminute` is not missing.
+Then, I ran a permutation test using the following hypotheses and plotted the empirical distribution of the TVD for the test:
 
-**Alternative Hypothesis**: The distribution of `league` when `damagemitigatedperminute` is missing is different from the distribution of `league` when `damagemitigatedperminute` is not missing.
+**Null Hypothesis**: The distribution of `league` when `firstdragon` is missing is the same as the distribution of `league` when `firstdragon` is not missing.
+
+**Alternative Hypothesis**: The distribution of `league` when `firstdragon` is missing is different from the distribution of `league` when `firstdragon` is not missing.
 
 <iframe
   src="assets/missing-league.html"
@@ -187,12 +186,16 @@ First, let's look at the missingness dependency between the columns `damagemitig
   frameborder="0"
 ></iframe>
 
-Next, let's look at the missingness dependency between the columns `damagemitigatedperminute` and `side`.
+As a result, the p-value of the permutation test came out to be **0.0** with the observed test statitic being **0.992600422832981**. Since the p-value is lower than the 0.05 significance level, the null hypothesis is rejected. This suggests that the missingness of `firstdragon` depends on the corresponding values of `league`.
+
+Next, let's look at the observed missingness dependency between the columns `firstdragon` and `side`.
 
 | side   |   side_missing = False |   side_missing = True |
 |:-------|-----------------------:|----------------------:|
 | Blue   |                    0.5 |                   0.5 |
 | Red    |                    0.5 |                   0.5 |
+
+Again, I ran a permutation test using the following hypotheses and plotted the empirical distribution of the TVD for the test:
 
 **Null Hypothesis**: The distribution of `side` when `damagemitigatedperminute` is missing is the same as the distribution of `side` when `damagemitigatedperminute` is not missing.
 
@@ -204,6 +207,8 @@ Next, let's look at the missingness dependency between the columns `damagemitiga
   height="600"
   frameborder="0"
 ></iframe>
+
+As a result, the p-value of the permutation test came out to be **1.0** with the observed test statitic being **0.0**. Since the p-value is significantly larger than the 0.05 significance level, the null hypothesis is not rejected. This suggests that the missingness of `firstdragon` does not depend on the corresponding values of `side`.
 
 ## Hypothesis Testing
 To understand the relationship between first dragon kill and overall team performance, I conducted a hypothesis test that aims to determine if there's a statistically significant difference between the distribution of KDA ratios for the teams that secured the first dragon kill and the teams that did not. By doing so, one can better understand how securing the first dragon kill could lead to enhanced gameplays in terms of obtaining more kills/assists while dying a fewer number of times, which is what the KDA ratio depicts.
@@ -233,7 +238,7 @@ From the hypothesis testing, it's statistically significant to conclude that sec
 Below is the head of the dataframe with all the information necessary for the training, analysis, and testing phases of the predictive model:
 
 |    |   result |   kills |   deaths |   assists |   kda | firstdragon   |     dpm |   damagetakenperminute | damagemitigatedperminute   |   totalgold |
-|---:|---------:|--------:|---------:|----------:|------:|:--------------|--------:|-----------------------:|:---------------------------|------------:|
+|---:|---------:|--------:|---------:|----------:|------:|--------------:|--------:|-----------------------:|---------------------------:|------------:|
 |  0 |        0 |       9 |       19 |        19 |  1.4  | 0             | 1981.09 |                3537.2  | 2364.7285                  |       47070 |
 |  1 |        1 |      19 |        9 |        62 |  8.1  | 1             | 2799.02 |                3009.67 | 2872.3292                  |       52617 |
 |  2 |        0 |       3 |       16 |         7 |  0.59 | 0             | 1690.98 |                2984.02 | 3109.6121                  |       57629 |
@@ -243,8 +248,12 @@ Below is the head of the dataframe with all the information necessary for the tr
 ## Baseline Model
 Now, it's time to make a predictive baseline model that can answer our prediction question. For the baseline model, I utilized a Random Forest Classifier, which contains the following features: `kills`, `assists`, `firstdragon`, and `dpm`. In a general PvP video game of any kind, usually the player with the better offensive skills would win more frequently. Therefore, this model utlizes the features that are directly correlated to attacking outputs to predict the outcome of the match. Among all these feature, all of them are quantitative except `firstdragon`, which is a nominal categorical variable already in binary form (0 and 1) that does not require further encodings. For the rest of the quantitative features (`kills`, `assists`, and `dpm`), I performed a 
 
+Using the hyperparameters of `max_depth = 2` and `n_estimators = 100`, the model scored a 
+
 ## Final Model
 For the final model, I added four more features: `kda`, `damagetakenperminute`, `damagemitigatedperminute`, and `totalgold`. In a typical LOL game, it is intuitively assumed that the team who dealt the most damage or avoided the most damage would have an advantage as they would be able to eliminate more enemies while staying alive for a longer period of time. Therefore, the features `damagetakenperminute` and `damagemitigatedperminute` would provide the model with the extra information needed to determine which team has a winning advantage. Moreover, gold is crucial for the players to upgrade the champions' offense and defense. With enhanced offensive and defensive skills, one can more easily defeat enemy champions and capture opposing Nexus to win the game.
+
+Futhermore, to more accurately predict the results of the match, I need to specify the best hyperparameters for the model, which are `max_depth` and the `n_estimators` for the random forest classifier. Using `GridSearchCV`, I tested a range of `max_depth` from 2 to 200 with 20 steps each and a range of `n_estimators` from 2 to 100 with 2 steps each. With this algorithm, I found that the best hyperparameters are `max_depth = 22` and `n_estimators = 62`, which would then be implemented in the new final model.
 
 ## Fairness Analysis
 Even though the model mentioned above may seem to be accurate, but accuracy does not imply fairness. For a model to be fair, it needs to treat all groups of values in the same way. Therefore, this fairness analysis is conducted to answer the following question: **Does the model perform worse for teams with a KDA ratio less than or equal to 5 than it does for teams with a KDA ratio greater than 5?**
