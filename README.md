@@ -186,7 +186,7 @@ Then, I ran a permutation test using the following hypotheses and plotted the em
   frameborder="0"
 ></iframe>
 
-As a result, the p-value of the permutation test came out to be **0.0** with the observed test statitic being **0.992600422832981**. Since the p-value is lower than the 0.05 significance level, the null hypothesis is rejected. This suggests that the missingness of `firstdragon` depends on the corresponding values of `league`.
+As a result, the p-value of the permutation test came out to be **0.0** with the observed test statitic being **0.992600422832981**. Since the p-value is lower than the 0.05 significance level, the null hypothesis is rejected. This suggests that the missingness of `firstdragon` depends on the corresponding values of `league`. Therefore, one can assume that some leagues did not consistently record the data of first dragon kill status, or did not wish to announce those data publicly, leading to this missingness dependency with the specific leagues the League matches are being held at.
 
 Next, let's look at the observed missingness dependency between the columns `firstdragon` and `side`.
 
@@ -208,7 +208,7 @@ Again, I ran a permutation test using the following hypotheses and plotted the e
   frameborder="0"
 ></iframe>
 
-As a result, the p-value of the permutation test came out to be **1.0** with the observed test statitic being **0.0**. Since the p-value is significantly larger than the 0.05 significance level, the null hypothesis is not rejected. This suggests that the missingness of `firstdragon` does not depend on the corresponding values of `side`.
+As a result, the p-value of the permutation test came out to be **1.0** with the observed test statitic being **0.0**. Since the p-value is significantly larger than the 0.05 significance level, the null hypothesis is not rejected. This suggests that the missingness of `firstdragon` does not depend on the corresponding values of `side`. Therefore, one can assume that the side the team is affliated with has nothing to do with the missing values of first dragon kill status.
 
 ## Hypothesis Testing
 To understand the relationship between first dragon kill and overall team performance, I conducted a hypothesis test that aims to determine if there's a statistically significant difference between the distribution of KDA ratios for the teams that secured the first dragon kill and the teams that did not. By doing so, one can better understand how securing the first dragon kill could lead to enhanced gameplays in terms of obtaining more kills/assists while dying a fewer number of times, which is what the KDA ratio depicts.
