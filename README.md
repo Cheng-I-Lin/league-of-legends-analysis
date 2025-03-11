@@ -99,10 +99,10 @@ According to the box plots, both the team with and without the first dragon kill
 ### Interesting Aggregates
 Below are some of the aggregated statistics of the dataset:
 
-|   result |   kills |   deaths |   assists |     kda |     dpm |   damagetakenperminute |   damagemitigatedperminute |   totalgold |
-|---------:|--------:|---------:|----------:|--------:|--------:|-----------------------:|---------------------------:|------------:|
-| 0.422969 | 13.6692 |  15.5542 |   30.3549 | 4.03649 | 2054.97 |                2956.4  |                    2577.55 |     56223.9 |
-| 0.57706  | 15.5269 |  13.7008 |   34.526  | 5.31485 | 2141.88 |                2930.35 |                    2637.62 |     57845.8 |
+|   firstdragon |   result |   kills |   deaths |   assists |     kda |     dpm |   damagetakenperminute |   damagemitigatedperminute |   totalgold |
+|--------------:|---------:|--------:|---------:|----------:|--------:|--------:|-----------------------:|---------------------------:|------------:|
+|             0 | 0.422969 | 13.6692 |  15.5542 |   30.3549 | 4.03649 | 2054.97 |                2956.4  |                    2577.55 |     56223.9 |
+|             1 | 0.57706  | 15.5269 |  13.7008 |   34.526  | 5.31485 | 2141.88 |                2930.35 |                    2637.62 |     57845.8 |
 
 By grouping the dataset by `firstdragon`, I calculated the average value of all relevant statistics. By comparing these categories with and without first dragon kill, we can easily visualize the difference in average team statistics with and without first dragon kill. From the table, it's evident that the team with the first dragon kill averages more wins, kills, assists, KDA, damages per minute, damage mitigated per minute, and total gold, all while averaging less deaths and damage taken per minute. This suggests that, on average, teams with the first dragon kill are performing better in all major gaming statistics.
 
@@ -186,7 +186,7 @@ Then, I ran a permutation test using the following hypotheses and plotted the em
   frameborder="0"
 ></iframe>
 
-As a result, the p-value of the permutation test came out to be **0.0** with the observed test statitic being **0.992600422832981**. Since the p-value is lower than the 0.05 significance level, the null hypothesis is rejected. This suggests that the missingness of `firstdragon` depends on the corresponding values of `league`. Therefore, one can assume that some leagues did not consistently record the data of first dragon kill status, or did not wish to announce those data publicly, leading to this missingness dependency with the specific leagues the League matches are being held at.
+As a result, the p-value of the permutation test came out to be **0.0** with the observed test statitic being **0.992600422832981**. Since the p-value is lower than the 0.05 significance level, we **reject** the null hypothesis. This suggests that the missingness of `firstdragon` depends on the corresponding values of `league`. Therefore, one can assume that some leagues did not consistently record the data of first dragon kill status, or did not wish to announce those data publicly, leading to this missingness dependency with the specific leagues the League matches are being held at.
 
 Next, let's look at the observed missingness dependency between the columns `firstdragon` and `side`.
 
@@ -208,7 +208,7 @@ Again, I ran a permutation test using the following hypotheses and plotted the e
   frameborder="0"
 ></iframe>
 
-As a result, the p-value of the permutation test came out to be **1.0** with the observed test statitic being **0.0**. Since the p-value is significantly larger than the 0.05 significance level, the null hypothesis is not rejected. This suggests that the missingness of `firstdragon` does not depend on the corresponding values of `side`. Therefore, one can assume that the side the team is affliated with has nothing to do with the missing values of first dragon kill status.
+As a result, the p-value of the permutation test came out to be **1.0** with the observed test statitic being **0.0**. Since the p-value is significantly larger than the 0.05 significance level, we **failed to reject** the null hypothesis. This suggests that the missingness of `firstdragon` does not depend on the corresponding values of `side`. Therefore, one can assume that the side the team is affliated with has nothing to do with the missing values of first dragon kill status.
 
 ## Hypothesis Testing
 To understand the relationship between first dragon kill and overall team performance, I conducted a hypothesis test that aims to determine if there's a statistically significant difference between the distribution of KDA ratios for the teams that secured the first dragon kill and the teams that did not. By doing so, one can better understand how securing the first dragon kill could lead to better gameplays in terms of obtaining more kills and assists while dying a fewer number of times, which is what the KDA ratio depicts. Below is the hypotheses that are being tested, along with the resulting histogram containing the distribution of the test statistics:
@@ -228,10 +228,12 @@ To understand the relationship between first dragon kill and overall team perfor
   frameborder="0"
 ></iframe>
 
-Based on the hypothesis test, which performed 500 iterations of permutation tests on the dataset, the resulting p-value is **0.0**, thus the null hypothesis is **rejected** as the p-value is lower than the significance level of **0.05**. Since there's a statistically significant result, this suggests that the distribution between KDA ratios for teams that secured the first dragon kill and teams that did not is different. Consequently, it demontrates that first dragon kills may have a significant positive impact on the teams' performances in terms of an increased KDA ratio. Therefore, a viable strategy team could incorporate into their game plan is to secure the dragon kills first in order to potentially increase the chances of winning.
+Based on the hypothesis test, which performed 500 iterations of permutation tests on the dataset, the resulting p-value is **0.0**, thus we **reject** the null hypothesis as the p-value is lower than the significance level of **0.05**. Since there's a statistically significant result, this suggests that the distribution between KDA ratios for teams that secured the first dragon kill and teams that did not is different. Consequently, it demontrates that first dragon kills may have a significant positive impact on the teams' performances in terms of an increased KDA ratio. Therefore, a viable strategy team could incorporate into their game plan is to secure the dragon kills first in order to potentially increase the chances of winning.
 
 ## Framing a Prediction Problem
 From the hypothesis testing, it's statistically significant to conclude that securing the first dragon kill can lead to a better team performance. Therefore, we can try to predict if a team would win or lose a game given whether they obtained the first dragon kill or not along with some other important team statistics.
+
+Since the `result` column is already in the binary format of zeros and ones, there's no need to one-hot encode the column
 
 Below is the head of the dataframe with all the information necessary for the training, analysis, and testing phases of the predictive model:
 
@@ -243,15 +245,23 @@ Below is the head of the dataframe with all the information necessary for the tr
 |  3 |        1 |      16 |        3 |        39 | 13.75 | 1             | 2124.55 |                2745.72 | 2868.4201                  |       71004 |
 |  4 |        1 |      13 |        6 |        35 |  6.86 | <NA>          | 1762.02 |                2263.25 | <NA>                       |       45468 |
 
+In a predictive model, the concept of overfitting happens when, while underfitting happens when. To avoid these problems, I decided to use 75% training data and 25% testing data, which is the best. 
+
+To evaluate the model, I will use accuracy and
+
 ## Baseline Model
 Now, it's time to make a predictive baseline model that can answer our prediction question. For the baseline model, I utilized a Random Forest Classifier, which contains the following features: `kills`, `assists`, `firstdragon`, and `dpm`. In a general PvP video game of any kind, usually the player with the better offensive skills would win more frequently. Therefore, this model utlizes the features that are directly correlated to attacking outputs to predict the outcome of the match. Among all these feature, all of them are quantitative except `firstdragon`, which is a nominal categorical variable already in binary form (0 and 1) that does not require further encodings. For the rest of the quantitative features (`kills`, `assists`, and `dpm`), I performed a 
 
-Using the hyperparameters of `max_depth = 2` and `n_estimators = 100`, the model scored a 
+Using the hyperparameters of `max_depth = 2` and `n_estimators = 100`, the fitted model scored a <!--percent-->,meaning that the model is able to accurately predict the correct outcome (win/lose) of the match 
 
 ## Final Model
-For the final model, I added four more features: `kda`, `damagetakenperminute`, `damagemitigatedperminute`, and `totalgold`. In a typical LOL game, it is intuitively assumed that the team who dealt the most damage or avoided the most damage would have an advantage as they would be able to eliminate more enemies while staying alive for a longer period of time. Therefore, the features `damagetakenperminute` and `damagemitigatedperminute` would provide the model with the extra information needed to determine which team has a winning advantage. Moreover, gold is crucial for the players to upgrade the champions' offense and defense. With enhanced offensive and defensive skills, one can more easily defeat enemy champions and capture opposing Nexus to win the game.
+For the final model, I added four more features: `kda`, `damagetakenperminute`, `damagemitigatedperminute`, and `totalgold`. By adding `kda` as a new feature, I also removed the features of `kills` and `assists` which were used in the previous baseline model. This is because I believe that the KDA ratio can better explain the performance of teams as it includes the average enemy champion elimination rate per death by accounting for the total number of deaths of the team. Since KDA is calculated from both kills and assists, there's no need to incorporate them into the model as they are both correlated with KDA. In other words, the KDA ratio of the team is a more encompassing and comprehensive feature that can replace `kills` and `assists` while also bringing in the factors of `deaths`.
+
+ In a typical LOL game, it is intuitively assumed that the team who dealt the most damage or avoided the most damage would have an advantage as they would be able to eliminate more enemies while staying alive for a longer period of time. Therefore, the features `damagetakenperminute` and `damagemitigatedperminute` would provide the model with the extra information needed to determine which team has a winning advantage. Moreover, gold is crucial for the players to upgrade the champions' offense and defense. With enhanced offensive and defensive skills, one can more easily defeat enemy champions and capture opposing Nexus to win the game.
 
 Futhermore, to more accurately predict the results of the match, I need to specify the best hyperparameters for the model, which are `max_depth` and the `n_estimators` for the random forest classifier. Using `GridSearchCV`, I tested a range of `max_depth` from 2 to 200 with 20 steps each and a range of `n_estimators` from 2 to 100 with 2 steps each. With this algorithm, I found that the best hyperparameters are `max_depth = 22` and `n_estimators = 62`, which would then be implemented in the new final model.
+
+Therefore, using the hyperparamters mentioned above, the fitted model scored a <!--percent-->,meaning that the model is able to accurately predict the correct outcome (win/lose) of the match 
 
 ## Fairness Analysis
 Even though the model mentioned above may seem to be accurate, but accuracy does not imply fairness. For a model to be fair, it needs to treat all groups of values in the same way. Therefore, this fairness analysis is conducted to answer the following question: **Does the model perform worse for teams with a KDA ratio less than or equal to 5 than it does for teams with a KDA ratio greater than 5?** To answer this question,I performed a permutation test on the two different groups. Below is the hypotheses that are being tested, along with the resulting histogram containing the distribution of the test statistics:
@@ -263,3 +273,7 @@ Even though the model mentioned above may seem to be accurate, but accuracy does
 **Test Statistic**: Difference in accuracy between teams with a KDA ratio less than or greater than 5
 
 **Significance Level**: 5% (0.05)
+
+<!--Insert plot-->
+
+Based on the permutation test, the resulting p-value is **0.0**, thus we **failed to reject** the null hypothesis as the p-value is higher than the significance level of **0.05**. This suggests that the model I fitted and used predicted the match outcome of both groups with similar accuracy, showing no bias toward any particular groups of data. Therefore, the model appears to be fair based on this sepecific criteria of KDA ratios.
