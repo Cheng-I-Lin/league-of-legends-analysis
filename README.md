@@ -51,7 +51,7 @@ Next, to further condense the information present in the dataset, I created one 
 
 After the `kda` column is implemented, I realized that some columns contain missing values, such as in the columns `dpm` and `damagetakenperminute`, which are missing two values each in the same two rows. Remember, since I already cleaned the dataset to contain only the team rows, two missing rows correspond to one specific match as there are two teams per match (thus two team rows). This means that there's only one game where both the data on `dpm` and `damagetakenperminute` are not recorded. Since this is only one instance of such missing values, I decided to drop both rows (drop the entire match) as there are still multiple matches left to analyze, hence one dropped match would have pose a significant impact on the overall analysis. Note that there are other missing values in the dataset, notably in the columns `firstdragon` and `damagemitigatedperminute`, yet they are missing too many values to simply be dropped and they lack other statistics that can help me impute valid values into these missing data. Therefore, I decided to keep these missing rows for now and analyze their missingness in the latter parts of the report in the **Assessment of Missingness** section.
 
-Below is the head (first five entries) of the cleaned dataframe that would be further utilized in the hypothesis testing and predictive model sections of the analysis:
+Below is the head (first five entries) of the cleaned dataframe that contains all the needed data values that would be further utilized in the hypothesis testing and predictive model sections of the analysis:
 
 | gameid                | league   | side   |   result |   kills |   deaths |   assists |   kda | firstdragon   |     dpm |   damagetakenperminute | damagemitigatedperminute   |   totalgold |
 |:----------------------|:---------|:-------|---------:|--------:|---------:|----------:|------:|--------------:|--------:|-----------------------:|---------------------------:|------------:|
@@ -290,3 +290,12 @@ Even though the model mentioned above may seem to be accurate, but accuracy does
 <!--Insert plot-->
 
 Based on the permutation test, the resulting p-value is **0.0**, thus we **failed to reject** the null hypothesis as the p-value is higher than the significance level of **0.05**. This suggests that the model I fitted and used predicted the match outcome of both groups with similar accuracy, showing no bias toward any particular groups of data. Therefore, the model appears to be fair based on this sepecific criteria of KDA ratios.
+
+
+I need to highlight these ==very important words==
+==Testing highlights==
+
+term
+: definition
+
+> helloooooooooo
