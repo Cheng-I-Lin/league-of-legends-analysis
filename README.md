@@ -277,14 +277,24 @@ In a predictive model, the concept of overfitting happens when, while underfitti
 To evaluate the model, I will use accuracy and F1 score
 
 ## Baseline Model
-Now, it's time to make a predictive baseline model that can answer our prediction question. For the baseline model, I utilized a Random Forest Classifier, which contains the following features: `kills`, `assists`, `firstdragon`, and `dpm`. In a general PvP video game of any kind, usually the player with the better offensive skills would win more frequently. Therefore, this model utlizes the features that are directly correlated to attacking outputs to predict the outcome of the match. Among all these feature, all of them are quantitative except `firstdragon`, which is a nominal categorical variable already in binary form (0 and 1) that does not require further encodings. For the rest of the quantitative features (`kills`, `assists`, and `dpm`), I performed a 
+Now, it's time to make a predictive baseline model that can answer our prediction question. For the baseline model, I utilized a Random Forest Classifier, which contains the following features: 
+1. `kills`
+2. `assists`
+3. `firstdragon`
+4. `dpm`
+In a general PvP video game of any kind, usually the player with the better offensive skills would win more frequently. Therefore, this model utlizes the features that are directly correlated to attacking outputs to predict the outcome of the match. Among all these feature, all of them are quantitative except `firstdragon`, which is a nominal categorical variable already in binary form (0 and 1) that does not require further encodings. For the rest of the quantitative features (`kills`, `assists`, and `dpm`), I performed a 
 
 Using the hyperparameters of `max_depth = 2` and `n_estimators = 100`, the fitted model scored a <!--percent-->,meaning that the model is able to accurately predict the correct outcome (win/lose) of the match 
 
 ## Final Model
-For the final model, I added four more features: `kda`, `damagetakenperminute`, `damagemitigatedperminute`, and `totalgold`. By adding `kda` as a new feature, I also removed the features of `kills` and `assists` which were used in the previous baseline model. This is because I believe that the KDA ratio can better explain the performance of teams as it includes the average enemy champion elimination rate per death by accounting for the total number of deaths of the team. Since KDA is calculated from both kills and assists, there's no need to incorporate them into the model as they are both correlated with KDA. In other words, the KDA ratio of the team is a more encompassing and comprehensive feature that can replace `kills` and `assists` while also bringing in the factors of `deaths`.
+For the final model, I added four more features: 
+1. `kda`
+2. `damagetakenperminute`
+3. `damagemitigatedperminute`
+4. `totalgold`
+By adding `kda` as a new feature, I also removed the features of `kills` and `assists` which were used in the previous baseline model. This is because I believe that the KDA ratio can better explain the performance of teams as it includes the average enemy champion elimination rate per death by accounting for the total number of deaths of the team. Since KDA is calculated from both kills and assists, there's no need to incorporate them into the model as they are both correlated with KDA. In other words, the KDA ratio of the team is a more encompassing and comprehensive feature that can replace `kills` and `assists` while also bringing in the factors of `deaths`.
 
- In a typical LOL game, it is intuitively assumed that the team who dealt the most damage or avoided the most damage would have an advantage as they would be able to eliminate more enemies while staying alive for a longer period of time. Therefore, the features `damagetakenperminute` and `damagemitigatedperminute` would provide the model with the extra information needed to determine which team has a winning advantage. Moreover, gold is crucial for the players to upgrade the champions' offense and defense. With enhanced offensive and defensive skills, one can more easily defeat enemy champions and capture opposing Nexus to win the game.
+In a typical LOL game, it is intuitively assumed that the team who dealt the most damage or avoided the most damage would have an advantage as they would be able to eliminate more enemies while staying alive for a longer period of time. Therefore, the features `damagetakenperminute` and `damagemitigatedperminute` would provide the model with the extra information needed to determine which team has a winning advantage. Moreover, gold is crucial for the players to upgrade the champions' offense and defense. With enhanced offensive and defensive skills, one can more easily defeat enemy champions and capture opposing Nexus to win the game.
 
 Futhermore, to more accurately predict the results of the match, I need to specify the best hyperparameters for the model, which are `max_depth` and the `n_estimators` for the random forest classifier. Using `GridSearchCV`, I tested a range of `max_depth` from 2 to 200 with 20 steps each and a range of `n_estimators` from 2 to 100 with 2 steps each. With this algorithm, I found that the best hyperparameters are `max_depth = 22` and `n_estimators = 62`, which would then be implemented in the new final model.
 
