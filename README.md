@@ -188,9 +188,11 @@ First, let's look at the observed missingness dependency between the columns `fi
 
 Then, I ran a permutation test using the following hypotheses and plotted the empirical distribution of the TVD for the test:
 
-**Null Hypothesis**: The distribution of `league` when `firstdragon` is missing is the same as the distribution of `league` when `firstdragon` is not missing.
+Null Hypothesis
+: The distribution of `league` when `firstdragon` is missing is the same as the distribution of `league` when `firstdragon` is not missing.
 
-**Alternative Hypothesis**: The distribution of `league` when `firstdragon` is missing is different from the distribution of `league` when `firstdragon` is not missing.
+Alternative Hypothesis
+: The distribution of `league` when `firstdragon` is missing is different from the distribution of `league` when `firstdragon` is not missing.
 
 <iframe
   src="assets/missing-league.html"
@@ -210,9 +212,11 @@ Next, let's look at the observed missingness dependency between the columns `fir
 
 Again, I ran a permutation test using the following hypotheses and plotted the empirical distribution of the TVD for the test:
 
-**Null Hypothesis**: The distribution of `side` when `damagemitigatedperminute` is missing is the same as the distribution of `side` when `damagemitigatedperminute` is not missing.
+Null Hypothesis
+: The distribution of `side` when `damagemitigatedperminute` is missing is the same as the distribution of `side` when `damagemitigatedperminute` is not missing.
 
-**Alternative Hypothesis**: The distribution of `side` when `damagemitigatedperminute` is missing is different from the distribution of `side` when `damagemitigatedperminute` is not missing.
+Alternative Hypothesis
+: The distribution of `side` when `damagemitigatedperminute` is missing is different from the distribution of `side` when `damagemitigatedperminute` is not missing.
 
 <iframe
   src="assets/missing-side.html"
@@ -226,13 +230,17 @@ As a result, the p-value of the permutation test came out to be **1.0** with the
 ## Hypothesis Testing
 To understand the relationship between first dragon kill and overall team performance, I conducted a hypothesis test that aims to determine if there's a statistically significant difference between the distribution of KDA ratios for the teams that secured the first dragon kill and the teams that did not. By doing so, one can better understand how securing the first dragon kill could lead to better gameplays in terms of obtaining more kills and assists while dying a fewer number of times, which is what the KDA ratio depicts. Below is the hypotheses that are being tested, along with the resulting histogram containing the distribution of the test statistics:
 
-**Null Hypothesis**: The distribution of KDA ratios for the teams that got the first dragon kill is the same as the teams that did not get the first dragon
+Null Hypothesis
+: The distribution of KDA ratios for the teams that got the first dragon kill is the same as the teams that did not get the first dragon
 
-**Alternative Hypothesis**: The distribution of KDA ratios for the teams that got the first dragon kill is **NOT** the same as the teams that did not get the first dragon
+Alternative Hypothesis
+: The distribution of KDA ratios for the teams that got the first dragon kill is **NOT** the same as the teams that did not get the first dragon
 
-**Test Statistic**: Absolute mean difference between the teams' KDA ratios with and without first dragon kill
+Test Statistic
+: Absolute mean difference between the teams' KDA ratios with and without first dragon kill
 
-**Significance Level**: 5% (0.05)
+Significance Level
+5% (0.05)
 
 <iframe
   src="assets/hypothesis.html"
