@@ -244,9 +244,9 @@ To understand the relationship between first dragon kill and overall team perfor
 Based on the hypothesis test, which performed 500 iterations of permutation tests on the dataset, the resulting p-value is **0.0**, thus we **reject** the null hypothesis as the p-value is lower than the significance level of **0.05**. Since there's a statistically significant result, this suggests that the distribution between KDA ratios for teams that secured the first dragon kill and teams that did not is different. Consequently, it demontrates that first dragon kills may have a significant positive impact on the teams' performances in terms of an increased KDA ratio. Therefore, a viable strategy team could incorporate into their game plan is to secure the dragon kills first in order to potentially increase the chances of winning.
 
 ## Framing a Prediction Problem
-From the hypothesis testing, it's statistically significant to conclude that securing the first dragon kill can lead to a better team performance. Therefore, we can try to predict if a team would win or lose a game given whether they obtained the first dragon kill or not along with some other important team statistics.
+From the hypothesis testing, it's statistically significant to conclude that securing the first dragon kill can lead to a better team performance. Therefore, we can try to predict **if a team would win or lose** a game given whether they obtained the first dragon kill or not along with some other important team statistics. Since this is a **classification problem**, 
 
-Since the `result` column is already in the binary format of zeros and ones, there's no need to one-hot encode the column
+Since the `result` column is already in the binary format of zeros and ones, there's no need to one-hot encode the column.
 
 Below is the head of the dataframe with all the information necessary for the training, analysis, and testing phases of the predictive model:
 
@@ -279,23 +279,19 @@ Therefore, using the hyperparamters mentioned above, the fitted model scored a <
 ## Fairness Analysis
 Even though the model mentioned above may seem to be accurate, but accuracy does not imply fairness. For a model to be fair, it needs to treat all groups of values in the same way. Therefore, this fairness analysis is conducted to answer the following question: **Does the model perform worse for teams with a KDA ratio less than or equal to 5 than it does for teams with a KDA ratio greater than 5?** To answer this question,I performed a permutation test on the two different groups. Below is the hypotheses that are being tested, along with the resulting histogram containing the distribution of the test statistics:
 
-**Null Hypothesis**: The model is fair, as its accuracy for teams with a KDA ratio less than or equal to 5 is same as its accuracy for teams with a KDA ratio greater than 100
+Null Hypothesis
+: The model is fair, as its accuracy for teams with a KDA ratio less than or equal to 5 is same as its accuracy for teams with a KDA ratio greater than 100
 
-**Alternative Hypothesis**: The model is unfair, as its accuracy for teams with a KDA ratio less than or equal to 5 is **NOT** the same as the accuracy for teams with a KDA ratio greater than 5
+Alternative Hypothesis
+: The model is unfair, as its accuracy for teams with a KDA ratio less than or equal to 5 is **NOT** the same as the accuracy for teams with a KDA ratio greater than 5
 
-**Test Statistic**: Difference in accuracy between teams with a KDA ratio less than or greater than 5
+Test Statistic
+: Difference in accuracy between teams with a KDA ratio less than or greater than 5
 
-**Significance Level**: 5% (0.05)
+Significance Level
+: 5% (0.05)
 
 <!--Insert plot-->
 
 Based on the permutation test, the resulting p-value is **0.0**, thus we **failed to reject** the null hypothesis as the p-value is higher than the significance level of **0.05**. This suggests that the model I fitted and used predicted the match outcome of both groups with similar accuracy, showing no bias toward any particular groups of data. Therefore, the model appears to be fair based on this sepecific criteria of KDA ratios.
 
-
-I need to highlight these ==very important words==
-==Testing highlights==
-
-term
-: definition
-
-> helloooooooooo
