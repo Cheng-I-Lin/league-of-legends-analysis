@@ -14,6 +14,7 @@ Within the game of LOL, a **dragon** is a special type of monster that gives the
 
 To fully understand the impact that first dragon kill has on the entire match, the analysis would be focused around the following question: 
 > **How does killing the first dragon affect the overall team performance, statistics, and match outcome?** 
+
 Specifically, by utilizing the provided dataset, I want to statistically analyze how first dragon kill affects performance metrics, such as the KDA ratio (which would be discussed later) and damage outputs, and predict how it can impact the final result of the match. Through this predictive model, I can provide valuable information on how to enhance team productivity and elevate the level of gameplay by optimizing tatical strategies involving dragon kills, potentially increasing winning probabilities for the teams.
 
 ### Row/Column Information
@@ -254,7 +255,10 @@ Significance Level
 Based on the hypothesis test, which performed 500 iterations of permutation tests on the dataset, the resulting p-value is **0.0**, thus we **reject** the null hypothesis as the p-value is lower than the significance level of **0.05**. Since there's a statistically significant result, this suggests that the distribution between KDA ratios for teams that secured the first dragon kill and teams that did not is different. Consequently, it demontrates that first dragon kills may have a significant positive impact on the teams' performances in terms of an increased KDA ratio. Therefore, a viable strategy team could incorporate into their game plan is to secure the dragon kills first in order to potentially increase the chances of winning.
 
 ## Framing a Prediction Problem
-From the hypothesis testing, it's statistically significant to conclude that securing the first dragon kill can lead to a better team performance. Therefore, we can try to predict **if a team would win or lose** a game given whether they obtained the first dragon kill or not along with some other important team statistics. Since this is a **classification problem**, 
+From the hypothesis testing, it's statistically significant to conclude that securing the first dragon kill can lead to a better team performance. Therefore, we can try to predict the following problem:
+>**Would a team win or lose a game given whether they obtained the first dragon kill or not along with some other important team and match statistics?**
+
+Since this is a **classification problem**, 
 
 Since the `result` column is already in the binary format of zeros and ones, there's no need to one-hot encode the column.
 
