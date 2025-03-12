@@ -69,7 +69,7 @@ For the univariate analysis, the below plot shows the distribution of team KDA r
 
 <iframe
   src="assets/kda-distribution.html"
-  width="800"
+  width="1000"
   height="600"
   frameborder="0"
 ></iframe>
@@ -80,7 +80,7 @@ Another univariate analysis I performed is shown below with the distribution of 
 
 <iframe
   src="assets/dpm-distribution.html"
-  width="800"
+  width="1000"
   height="600"
   frameborder="0"
 ></iframe>
@@ -92,7 +92,7 @@ For the bivariate analysis, the below chart shows how many teams won with the fi
 
 <iframe
   src="assets/win-piechart.html"
-  width="800"
+  width="1000"
   height="600"
   frameborder="0"
 ></iframe>
@@ -103,7 +103,7 @@ Another bivaraiate analysis I performed is shown below with the distributions of
 
 <iframe
   src="assets/kda-boxplot.html"
-  width="800"
+  width="1000"
   height="600"
   frameborder="0"
 ></iframe>
@@ -199,7 +199,7 @@ Alternative Hypothesis
 
 <iframe
   src="assets/missing-league.html"
-  width="800"
+  width="1000"
   height="600"
   frameborder="0"
 ></iframe>
@@ -223,7 +223,7 @@ Alternative Hypothesis
 
 <iframe
   src="assets/missing-side.html"
-  width="800"
+  width="1000"
   height="600"
   frameborder="0"
 ></iframe>
@@ -247,7 +247,7 @@ Significance Level
 
 <iframe
   src="assets/hypothesis.html"
-  width="800"
+  width="1000"
   height="600"
   frameborder="0"
 ></iframe>
@@ -291,7 +291,10 @@ Futhermore, to more accurately predict the results of the match, I need to speci
 Therefore, using the hyperparamters mentioned above, the fitted model scored a <!--percent-->,meaning that the model is able to accurately predict the correct outcome (win/lose) of the match 
 
 ## Fairness Analysis
-Even though the model mentioned above may seem to be accurate, but accuracy does not imply fairness. For a model to be fair, it needs to treat all groups of values in the same way. Therefore, this fairness analysis is conducted to answer the following question: **Does the model perform worse for teams with a KDA ratio less than or equal to 5 than it does for teams with a KDA ratio greater than 5?** To answer this question,I performed a permutation test on the two different groups. Below is the hypotheses that are being tested, along with the resulting histogram containing the distribution of the test statistics:
+Even though the model mentioned above may seem to be accurate, but accuracy does not imply fairness. For a model to be fair, it needs to treat all groups of values in the same way. Therefore, this fairness analysis is conducted to answer the following question: 
+> **Does the model perform worse for teams with a KDA ratio less than or equal to 5 than it does for teams with a KDA ratio greater than 5?** 
+
+To answer this question,I performed a permutation test on the two different groups. Below is the hypotheses that are being tested, along with the resulting histogram containing the distribution of the test statistics:
 
 Null Hypothesis
 : The model is fair, as its accuracy for teams with a KDA ratio less than or equal to 5 is same as its accuracy for teams with a KDA ratio greater than 100
