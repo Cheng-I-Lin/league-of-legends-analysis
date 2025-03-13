@@ -231,7 +231,7 @@ Alternative Hypothesis
 As a result, the p-value of the permutation test came out to be **1.0** with the observed test statitic being **0.0**. Since the p-value is significantly larger than the 0.05 significance level, we **failed to reject** the null hypothesis. This suggests that the missingness of `firstdragon` does not depend on the corresponding values of `side`. Therefore, one can assume that the side the team is affliated with has nothing to do with the missing values of first dragon kill status.
 
 ## Hypothesis Testing
-To understand the relationship between first dragon kill and overall team performance, I conducted a hypothesis test that aims to determine if there's a statistically significant difference between the distribution of KDA ratios for the teams that secured the first dragon kill and the teams that did not. By doing so, one can better understand how securing the first dragon kill could lead to better gameplays in terms of obtaining more kills and assists while dying a fewer number of times, which is what the KDA ratio depicts. Below is the hypotheses that are being tested, along with the resulting histogram containing the distribution of the test statistics:
+To understand the relationship between first dragon kill and overall team performance, I conducted a permutation test that aims to determine if there's a statistically significant difference between the distribution of KDA ratios for the teams that secured the first dragon kill and the teams that did not. By doing so, one can better understand how securing the first dragon kill could lead to better gameplays in terms of obtaining more kills and assists while dying a fewer number of times, which is what the KDA ratio depicts. Below is the hypotheses that are being tested, along with the resulting histogram containing the distribution of the test statistics:
 
 Null Hypothesis
 : The distribution of KDA ratios for the teams that got the first dragon kill is the same as the teams that did not get the first dragon
@@ -252,17 +252,13 @@ Significance Level
   frameborder="0"
 ></iframe>
 
-Based on the hypothesis test, which performed 500 iterations of permutation tests on the dataset, the resulting p-value is **0.0**, thus we **reject** the null hypothesis as the p-value is lower than the significance level of **0.05**. Since there's a statistically significant result, this suggests that the distribution between KDA ratios for teams that secured the first dragon kill and teams that did not is different. Consequently, it demontrates that first dragon kills may have a significant positive impact on the teams' performances in terms of an increased KDA ratio. Therefore, a viable strategy team could incorporate into their game plan is to secure the dragon kills first in order to potentially increase the chances of winning.
+Based on the permutation test, which performed 500 iterations of permutations on the dataset, the resulting p-value is **0.0**, thus we **reject** the null hypothesis as the p-value is lower than the significance level of **0.05**. Since there's a statistically significant result, this suggests that the distribution between KDA ratios for teams that secured the first dragon kill and teams that did not is different. Consequently, it demontrates that first dragon kills may have a significant positive impact on the teams' performances in terms of an increased KDA ratio. Therefore, a viable strategy team could incorporate into their game plan is to secure the dragon kills first in order to potentially increase the chances of winning.
 
 ## Framing a Prediction Problem
-From the hypothesis testing, it's statistically significant to conclude that securing the first dragon kill can lead to a better team performance. Therefore, we can try to predict the following problem:
->**Would a team win or lose a game given whether they obtained the first dragon kill or not along with some other important team and match statistics?**
+From the hypothesis testing, it's statistically significant to conclude that securing the first dragon kill can lead to a better team performance. This increase in team production is crucial in deciding the outcome of the match. Therefore, we can try to predict the following problem:
+> **Would a team win or lose a game given whether they obtained the first dragon kill or not along with some other important team and match statistics?**
 
-Since this is a **classification problem** as the model is trying to classify winning and losing matches, 
-
-Since the `result` column is already in the binary format of zeros and ones, there's no need to one-hot encode the column.
-
-Below is the head of the dataframe with all the information necessary for the training, analysis, and testing phases of the predictive model:
+Since this is a **binary classification problem** as the model is trying to classify winning and losing matches, the response variable (the variable that the model will try to predict) will be `result`. With the `result` column already in the binary format of zeros and ones, there's no need to one-hot encode the values. Below is the head of the dataframe with all the information necessary for the training, analysis, and testing phases of the predictive model, which is just the same dataset as the one shown in the **Data Cleaning** section of the report excluding some irrelevant categorical variables:
 
 |    |   result |   kills |   deaths |   assists |   kda | firstdragon   |     dpm |   damagetakenperminute | damagemitigatedperminute   |   totalgold |
 |---:|---------:|--------:|---------:|----------:|------:|--------------:|--------:|-----------------------:|---------------------------:|------------:|
@@ -274,7 +270,9 @@ Below is the head of the dataframe with all the information necessary for the tr
 
 In a predictive model, the concept of overfitting happens when, while underfitting happens when. To avoid these problems, I decided to use 75% training data and 25% testing data, which is the best. 
 
-To evaluate the model, I will use accuracy and F1 score
+To evaluate the model, I will use accuracy and F1-score
+
+This is due to the fact that the distribution
 
 ## Baseline Model
 Now, it's time to make a predictive baseline model that can answer our prediction question. For the baseline model, I utilized a Random Forest Classifier, which contains the following features: 
@@ -282,23 +280,25 @@ Now, it's time to make a predictive baseline model that can answer our predictio
 2. `assists`
 3. `firstdragon`
 4. `dpm`
-In a general PvP video game of any kind, usually the player with the better offensive skills would win more frequently. Therefore, this model utlizes the features that are directly correlated to attacking outputs to predict the outcome of the match. Among all these feature, all of them are quantitative except `firstdragon`, which is a nominal categorical variable already in binary form (0 and 1) that does not require further encodings. For the rest of the quantitative features (`kills`, `assists`, and `dpm`), I performed a 
 
-Using the hyperparameters of `max_depth = 2` and `n_estimators = 100`, the fitted model scored a <!--percent-->,meaning that the model is able to accurately predict the correct outcome (win/lose) of the match 
+In a general PvP video game of any kind, usually the players with the better offensive skills would win more frequently. Therefore, this model utlizes the features that are directly correlated to attacking outputs to predict the outcome of the match (`firstdragon` correlates to better performance in terms of KDA ratio as described in the **Hypothesis Testing** section). Among all these feature, all of them are quantitative except `firstdragon`, which is a nominal categorical variable already in binary form (0 and 1) that does not require further encodings. For the rest of the quantitative features (`kills`, `assists`, and `dpm`), I performed a StandardScaler Transformer before fitting them to the model. This is because every match has a different length of game time, thus naturally, the games that were played longer would make sense to have a higher quantity of numerical variables like `kills` and `assists`. Therefore, by standardizing the values, we can treat all features across different lengths of time under the same metrics and scales.
+
+Using the hyperparameters of `max_depth = 2` and `n_estimators = 100`, the fitted model scored an accuracy of approximately **0.8371**, meaning that the model is able to accurately predict the correct outcome (win/lose) of the match **83.71%** of the time. Furthermore, the F1-score of the model turns out to be approximately **0.8406** with a precision of 0.8049 and a recall of 0.8795. Although the outcomes for accuracy and F1-score are not terrible, there are definitely rooms for improvement for the model. Therefore, in the next section, I will be adding more features as well as finding the best hyperparameters in order to improve the predictive model.
 
 ## Final Model
-For the final model, I added four more features: 
+For the final model, I added four more quantitative features: 
 1. `kda`
 2. `damagetakenperminute`
 3. `damagemitigatedperminute`
 4. `totalgold`
+
 By adding `kda` as a new feature, I also removed the features of `kills` and `assists` which were used in the previous baseline model. This is because I believe that the KDA ratio can better explain the performance of teams as it includes the average enemy champion elimination rate per death by accounting for the total number of deaths of the team. Since KDA is calculated from both kills and assists, there's no need to incorporate them into the model as they are both correlated with KDA. In other words, the KDA ratio of the team is a more encompassing and comprehensive feature that can replace `kills` and `assists` while also bringing in the factors of `deaths`.
 
-In a typical LOL game, it is intuitively assumed that the team who dealt the most damage or avoided the most damage would have an advantage as they would be able to eliminate more enemies while staying alive for a longer period of time. Therefore, the features `damagetakenperminute` and `damagemitigatedperminute` would provide the model with the extra information needed to determine which team has a winning advantage. Moreover, gold is crucial for the players to upgrade the champions' offense and defense. With enhanced offensive and defensive skills, one can more easily defeat enemy champions and capture opposing Nexus to win the game.
+In a typical LOL game, it is intuitively assumed that the team who dealt the most damage or avoided the most damage would have an advantage as they would be able to eliminate more enemies while staying alive for a longer period of time. Therefore, the features `damagetakenperminute` and `damagemitigatedperminute` would provide the model with the extra information needed to determine which team has a winning advantage. Moreover, gold is extremely crucial for the players to upgrade the champions' offense and defense, as one can more easily defeat enemy champions and capture opposing Nexus to win the game with enhanced buffs, abilities, and items. Thus, `totalgold` would be able to provide the model with an evaluation metric on how much each team has progressed in terms of strength and item quality. With the new features, I also performed StandardScaler Transformer on them to standardize the values of these quantitative variables.
 
-Futhermore, to more accurately predict the results of the match, I need to specify the best hyperparameters for the model, which are `max_depth` and the `n_estimators` for the random forest classifier. Using `GridSearchCV`, I tested a range of `max_depth` from 2 to 200 with 20 steps each and a range of `n_estimators` from 2 to 100 with 2 steps each. With this algorithm, I found that the best hyperparameters are `max_depth = 22` and `n_estimators = 62`, which would then be implemented in the new final model.
+Futhermore, to more accurately predict the results of the match, I need to specify the best hyperparameters for the model, which are `max_depth` and the `n_estimators` for the random forest classifier. Using `GridSearchCV`, a technique for finding the optimal parameter values, I tested a range of `max_depth` from 2 to 200 with 20 steps each and a range of `n_estimators` from 2 to 100 with 2 steps each. With this algorithm, I found that the best hyperparameters are `max_depth = 22` and `n_estimators = 62`, which would then be implemented in the new final model.
 
-Therefore, using the hyperparamters mentioned above, the fitted model scored a <!--percent-->,meaning that the model is able to accurately predict the correct outcome (win/lose) of the match 
+Therefore, using the hyperparamters mentioned above, the fitted model scored an accuracy of approximately **0.9529**, meaning that the model is able to accurately predict the correct outcome (win/lose) of the match 95.29% of the time. Furthermore, the F1-score of the model turns out to be approximately **0.9521** with a precision of 0.9470 and a recall of 0.9572. As you can clearly see, there have been huge improvements in the predictive power of the model as both of the metrics used on evaluating the models have signifcantly increased from the baseline model to the final model. This suggests that the adjustments made in this section were a success, as they effectively improved the accuracy score and the F1-score.
 
 ## Fairness Analysis
 Even though the model mentioned above may seem to be accurate, but accuracy does not imply fairness. For a model to be fair, it needs to treat all groups of values in the same way. Therefore, this fairness analysis is conducted to answer the following question: 
