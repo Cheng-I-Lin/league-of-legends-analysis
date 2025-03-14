@@ -268,11 +268,9 @@ Since this is a **binary classification problem** as the model is trying to clas
 |  3 |        1 |      16 |        3 |        39 | 13.75 | 1             | 2124.55 |                2745.72 | 2868.4201                  |       71004 |
 |  4 |        1 |      13 |        6 |        35 |  6.86 | <NA>          | 1762.02 |                2263.25 | <NA>                       |       45468 |
 
-In a predictive model, the concept of overfitting happens when, while underfitting happens when. To avoid these problems, I decided to use 75% training data and 25% testing data, which is the best. 
+To build a predictive model, one would need to first train the model on some sets of training data, fitting the model to those data so that it can distinguish and learn the differences between each value. Once it's able to learn the correlation and predict values within the training dataset, the model would then be tested on a separate array of values of testing data. Since the model was already trained and fitted to a similar sample of data, it should also provide similarly accurate predictions for the testing data. However, just because a model can accurately predict training data, it doesn't necessarily mean that it can generalize and work well on similar, unseen samples from the same population. This is because models can **overfit** where they are too complicated with high variance of predictions, while models can also **underfit** where they are too basic to capture the relationship between the features and the response variable. Therefore, choosing the right proportion of training and testing data is extremely important as to avoid these problems.
 
-To evaluate the model, I will use accuracy and F1-score
-
-This is due to the fact that the distribution
+To avoid underfitting, I need to use a large dataset with multiple features for training and testing the model, which is already given as the current dataset contain a variety of information on League matches, so as to decrease bias. To avoid overfitting and high variance, I decided to use 75% training data and 25% testing data, which are the default parameters for the function `train_test_split` that's used to split the data. Finally, to evaluate the model, I will only use the accuracy score without the F1-score. This is because the dataset is very balanced as a match can only either be a win (1) or a loss (0), so there are no more wins or more losses. That being said, 
 
 ## Baseline Model
 Now, it's time to make a predictive baseline model that can answer our prediction question. For the baseline model, I utilized a Random Forest Classifier, which contains the following features: 
@@ -304,7 +302,7 @@ Therefore, using the hyperparamters mentioned above, the fitted model scored an 
 Even though the model mentioned above may seem to be accurate, but accuracy does not imply fairness. For a model to be fair, it needs to treat all groups of values in the same way. Therefore, this fairness analysis is conducted to answer the following question: 
 > **Does the model perform worse for teams with a KDA ratio less than or equal to 5 than it does for teams with a KDA ratio greater than 5?** 
 
-To answer this question,I performed a permutation test on the two different groups. Below is the hypotheses that are being tested, along with the resulting histogram containing the distribution of the test statistics:
+To answer this question, I performed a permutation test on the two different groups, with *Group X* representing the teams with a KDA ratio less than or equal to 5 and *Group Y* representing the teams with a KDA ratio greater than 5. Below is the hypotheses that are being tested, along with the resulting histogram containing the distribution of the test statistics:
 
 Null Hypothesis
 : The model is fair, as its accuracy for teams with a KDA ratio less than or equal to 5 is same as its accuracy for teams with a KDA ratio greater than 100
