@@ -69,7 +69,7 @@ For the univariate analysis, the below plot shows the distribution of team KDA r
 
 <iframe
   src="assets/kda-distribution.html"
-  width="1000"
+  width="800"
   height="600"
   frameborder="0"
 ></iframe>
@@ -80,7 +80,7 @@ Another univariate analysis I performed is shown below with the distribution of 
 
 <iframe
   src="assets/dpm-distribution.html"
-  width="1000"
+  width="800"
   height="600"
   frameborder="0"
 ></iframe>
@@ -92,7 +92,7 @@ For the bivariate analysis, the below chart shows how many teams won with the fi
 
 <iframe
   src="assets/win-piechart.html"
-  width="1000"
+  width="800"
   height="600"
   frameborder="0"
 ></iframe>
@@ -103,7 +103,7 @@ Another bivaraiate analysis I performed is shown below with the distributions of
 
 <iframe
   src="assets/kda-boxplot.html"
-  width="1000"
+  width="800"
   height="600"
   frameborder="0"
 ></iframe>
@@ -199,7 +199,7 @@ Alternative Hypothesis
 
 <iframe
   src="assets/missing-league.html"
-  width="1000"
+  width="800"
   height="600"
   frameborder="0"
 ></iframe>
@@ -223,7 +223,7 @@ Alternative Hypothesis
 
 <iframe
   src="assets/missing-side.html"
-  width="1000"
+  width="800"
   height="600"
   frameborder="0"
 ></iframe>
@@ -247,7 +247,7 @@ Significance Level
 
 <iframe
   src="assets/hypothesis.html"
-  width="1000"
+  width="800"
   height="600"
   frameborder="0"
 ></iframe>
@@ -270,7 +270,7 @@ Since this is a **binary classification problem** as the model is trying to clas
 
 To build a predictive model, one would need to first train the model on some sets of training data, fitting the model to those data so that it can distinguish and learn the differences between each value. Once it's able to learn the correlation and predict values within the training dataset, the model would then be tested on a separate array of values of testing data. Since the model was already trained and fitted to a similar sample of data, it should also provide similarly accurate predictions for the testing data. However, just because a model can accurately predict training data, it doesn't necessarily mean that it can generalize and work well on similar, unseen samples from the same population. This is because models can **overfit** where they are too complicated with high variance of predictions, while models can also **underfit** where they are too basic to capture the relationship between the features and the response variable. Therefore, choosing the right proportion of training and testing data is extremely important as to avoid these problems.
 
-To avoid underfitting, I need to use a large dataset with multiple features for training and testing the model, which is already given as the current dataset contain a variety of information on League matches, so as to decrease bias. To avoid overfitting and high variance, I decided to use 75% training data and 25% testing data, which are the default parameters for the function `train_test_split` that's used to split the data. Finally, to evaluate the model, I will only use the accuracy score without the F1-score. This is because the dataset is very balanced as a match can only either be a win (1) or a loss (0), so there are no more wins or more losses. That being said, 
+To avoid underfitting, I need to use a large dataset with multiple features for training and testing the model, which is already given as the current dataset contain a variety of information on League matches, so as to decrease bias. To avoid overfitting and high variance, I decided to use 75% training data and 25% testing data, which are the default parameters for the function `train_test_split` that's used to split the data. Finally, to evaluate the model, I will only use the accuracy score without the F1-score. This is because the dataset is very balanced as a match can only either be a win (1) or a loss (0), so the distribution of wins and losses is the same as there are no more wins than losses or more losses than wins. That being said, I would still provide the F1-score along with the **confusion matrix**, a table that shows the value of **recall** (proportion of actually winning matches that are correctly classified) and **precision** (proportion of predicted winning matches that are correctly classified), to provide more details on the model's ability to identify all relevant instances and distinguish the false positives (note that only **accuracy** would be used as the main model evaluation metric).
 
 ## Baseline Model
 Now, it's time to make a predictive baseline model that can answer our prediction question. For the baseline model, I utilized a Random Forest Classifier, which contains the following features: 
@@ -281,7 +281,14 @@ Now, it's time to make a predictive baseline model that can answer our predictio
 
 In a general PvP video game of any kind, usually the players with the better offensive skills would win more frequently. Therefore, this model utlizes the features that are directly correlated to attacking outputs to predict the outcome of the match (`firstdragon` correlates to better performance in terms of KDA ratio as described in the **Hypothesis Testing** section). Among all these feature, all of them are quantitative except `firstdragon`, which is a nominal categorical variable already in binary form (0 and 1) that does not require further encodings. For the rest of the quantitative features (`kills`, `assists`, and `dpm`), I performed a StandardScaler Transformer before fitting them to the model. This is because every match has a different length of game time, thus naturally, the games that were played longer would make sense to have a higher quantity of numerical variables like `kills` and `assists`. Therefore, by standardizing the values, we can treat all features across different lengths of time under the same metrics and scales.
 
-Using the hyperparameters of `max_depth = 2` and `n_estimators = 100`, the fitted model scored an accuracy of approximately **0.8371**, meaning that the model is able to accurately predict the correct outcome (win/lose) of the match **83.71%** of the time. Furthermore, the F1-score of the model turns out to be approximately **0.8406** with a precision of 0.8049 and a recall of 0.8795. Although the outcomes for accuracy and F1-score are not terrible, there are definitely rooms for improvement for the model. Therefore, in the next section, I will be adding more features as well as finding the best hyperparameters in order to improve the predictive model.
+Using the hyperparameters of `max_depth = 2` and `n_estimators = 100`, the fitted model scored an accuracy of approximately **0.8371**, meaning that the model is able to accurately predict the correct outcome (win/lose) of the match **83.71%** of the time. Furthermore, the F1-score of the model turns out to be approximately *0.8406* with a precision of *0.8049* and a recall of *0.8795*, calculated from the confusion matrix shown below. 
+
+|                  |   Predicted Losing |   Predicted Winning |
+|:-----------------|-------------------:|--------------------:|
+| Acutally Losing  |               2557 |                 653 |
+| Actually Winning |                369 |                2695 |
+
+Although the outcome for accuracy is not terrible, there are definitely rooms for improvement for the model. Therefore, in the next section, I will be adding more features as well as finding the best hyperparameters in order to improve the predictive model.
 
 ## Final Model
 For the final model, I added four more quantitative features: 
@@ -296,16 +303,23 @@ In a typical LOL game, it is intuitively assumed that the team who dealt the mos
 
 Futhermore, to more accurately predict the results of the match, I need to specify the best hyperparameters for the model, which are `max_depth` and the `n_estimators` for the random forest classifier. Using `GridSearchCV`, a technique for finding the optimal parameter values, I tested a range of `max_depth` from 2 to 200 with 20 steps each and a range of `n_estimators` from 2 to 100 with 2 steps each. With this algorithm, I found that the best hyperparameters are `max_depth = 22` and `n_estimators = 62`, which would then be implemented in the new final model.
 
-Therefore, using the hyperparamters mentioned above, the fitted model scored an accuracy of approximately **0.9529**, meaning that the model is able to accurately predict the correct outcome (win/lose) of the match 95.29% of the time. Furthermore, the F1-score of the model turns out to be approximately **0.9521** with a precision of 0.9470 and a recall of 0.9572. As you can clearly see, there have been huge improvements in the predictive power of the model as both of the metrics used on evaluating the models have signifcantly increased from the baseline model to the final model. This suggests that the adjustments made in this section were a success, as they effectively improved the accuracy score and the F1-score.
+Therefore, using the hyperparamters mentioned above, the fitted model scored an accuracy of approximately **0.9529**, meaning that the model is able to accurately predict the correct outcome (win/lose) of the match 95.29% of the time. Furthermore, the F1-score of the model turns out to be approximately *0.9521* with a precision of *0.9470* and a recall of *0.9572*, calculated from the confusion matrix shown below.
+
+|                  |   Predicted Losing |   Predicted Winning |
+|:-----------------|-------------------:|--------------------:|
+| Acutally Losing  |               3046 |                 164 |
+| Actually Winning |                131 |                2933 |
+
+As you can clearly see, there have been huge improvements in the predictive power of the model as the accuracy of the final model has drastically increased from that of the baseline model. This suggests that the adjustments made in this section were a success, as they effectively improved the accuracy score.
 
 ## Fairness Analysis
 Even though the model mentioned above may seem to be accurate, but accuracy does not imply fairness. For a model to be fair, it needs to treat all groups of values in the same way. Therefore, this fairness analysis is conducted to answer the following question: 
 > **Does the model perform worse for teams with a KDA ratio less than or equal to 5 than it does for teams with a KDA ratio greater than 5?** 
 
-To answer this question, I performed a permutation test on the two different groups, with *Group X* representing the teams with a KDA ratio less than or equal to 5 and *Group Y* representing the teams with a KDA ratio greater than 5. Below is the hypotheses that are being tested, along with the resulting histogram containing the distribution of the test statistics:
+To answer this question, I performed a permutation test on the two different groups, with *Group X* representing the teams with a KDA ratio less than or equal to 5 and *Group Y* representing the teams with a KDA ratio greater than 5. Using accuracy as the evaluation metric, below is the hypotheses that are being tested, along with the resulting histogram containing the distribution of the test statistics:
 
 Null Hypothesis
-: The model is fair, as its accuracy for teams with a KDA ratio less than or equal to 5 is same as its accuracy for teams with a KDA ratio greater than 100
+: The model is fair, as its accuracy for teams with a KDA ratio less than or equal to 5 is same as its accuracy for teams with a KDA ratio greater than 5
 
 Alternative Hypothesis
 : The model is unfair, as its accuracy for teams with a KDA ratio less than or equal to 5 is **NOT** the same as the accuracy for teams with a KDA ratio greater than 5
@@ -316,7 +330,12 @@ Test Statistic
 Significance Level
 : 5% (0.05)
 
-<!--Insert plot-->
+<iframe
+  src="assets/fairness.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
 
-Based on the permutation test, the resulting p-value is **0.0**, thus we **failed to reject** the null hypothesis as the p-value is higher than the significance level of **0.05**. This suggests that the model I fitted and used predicted the match outcome of both groups with similar accuracy, showing no bias toward any particular groups of data. Therefore, the model appears to be fair based on this sepecific criteria of KDA ratios.
+Based on the permutation test, the resulting p-value is **0.0**, thus we **reject** the null hypothesis as the p-value is lower than the significance level of **0.05**. This suggests that the model I fitted and used predicted the match outcome of both groups with different accuracies, showing some bias toward *Group Y* as the observed test statistic of accuracy of roughly **0.067** is significantly higher than the rest of the permutated data. This means that the model predicted better for teams with a KDA ratio greater than 5 (*Group Y*) as the accuracy score is statistically higher than that of teams with a KDA ratio less than or equal to 5 (*Group X*). Therefore, even though the accuracies for both groups are extremely high <!--Maybe add table here?--> and that the difference in accuracy is only about **7%**, the model appears to be unfair based on this sepecific criteria of KDA ratios.
 
