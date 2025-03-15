@@ -15,7 +15,7 @@ Within the game of LOL, a **dragon** is a special type of monster that gives the
 To fully understand the impact that first dragon kill has on the entire match, the analysis would be focused around the following question: 
 > **How does killing the first dragon affect the overall team performance, statistics, and match outcome?** 
 
-Specifically, by utilizing the provided dataset, I want to statistically analyze how first dragon kill affects performance metrics, such as the KDA ratio (which would be discussed later) and damage outputs, and predict how it can impact the final result of the match. Through this predictive model, I can provide valuable information on how to enhance team productivity and elevate the level of gameplay by optimizing tatical strategies involving dragon kills, potentially increasing winning probabilities for the teams.
+Specifically, by utilizing the provided dataset, I want to statistically analyze how first dragon kill affects performance metrics, such as the KDA ratio (which would be discussed later) and damage outputs, and predict how it can impact the final result of the match. Through this predictive model, I can provide valuable information on how to enhance team productivity and elevate the level of gameplay by optimizing tatical strategies involving dragon kills, potentially amplifying team performance and increasing winning probabilities, which is crucial coming from a competitive gaming perspective.
 
 ### Row/Column Information
 The dataset includes an extensive array of gaming statistics, such as player and team performance metrics in the forms of match results, number of kills, and many other important gameplay features, gathered from professional League of Legends esports tournament matches in the year 2022. Overall, there are **150588** rows and **161** columns in the dataset. However, not all rows and columns are necessary for the analytical purposes of this report (the dataset would be cleaned in the **Data Cleaning** section). The following shows the relevant columns that would be used in the latter parts of this analysis and brief descriptions of what their values represent:
@@ -240,7 +240,7 @@ Alternative Hypothesis
 : The distribution of KDA ratios for the teams that got the first dragon kill is **NOT** the same as the teams that did not get the first dragon
 
 Test Statistic
-: Absolute mean difference between the teams' KDA ratios with and without first dragon kill
+: Absolute mean difference between the teams' KDA ratios with and without first dragon kill (shows how the two distributions differ from one another)
 
 Significance Level
 : 5% (0.05)
